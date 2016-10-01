@@ -3,16 +3,17 @@
 \docType{package}
 \name{pstest-package}
 \alias{pstest-package}
-\title{pstest: An R Package for Assessing the Goodness-of-fit of Propensity Score Models.}
+\title{pstest: An R Package for assessing the goodness of fit of propensity score models.}
 \description{
 An R package for implementing all the tests proposed in Sant'Anna and
 Song (2016), 'Specification Tests for the Propensity Score', available at
 Pedro H.C. Sant'Anna webpage, \url{http://sites.google.com/site/pedrohcsantanna/}.
+}
+\details{
 In short, this package implements bootstrapped Kolmogorov-Smirnov
 and Cramer-von Mises type tests for parametric propensity score models with
 either logistic ('logit'), or standard normal ('probit') link function.
-}
-\details{
+
 The tests do not suffer from the "curse of dimensionality" when the vector of covariates
 is of high-dimensionality, are fully data-driven, do not require tuning parameters
 such as bandwidths, and are able to detect a broad class of local alternatives converging
