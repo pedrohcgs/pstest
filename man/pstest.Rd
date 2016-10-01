@@ -4,8 +4,7 @@
 \alias{pstest}
 \title{pstest: Specification Tests for the Propensity Score}
 \usage{
-pstest(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000,
-  cores = 1)
+pstest(d, pscore, xpscore, model = "logit", nboot = 1000, cores = 1)
 }
 \arguments{
 \item{d}{vector containing the binary treatment indicator}
