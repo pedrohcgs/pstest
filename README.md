@@ -1,4 +1,4 @@
-# pstest: An R Package to Assess the Goodness-of-Fit of Parametric Propensity Score Models.
+# pstest: An R Package to assess the goodness of fit of parametric propensity score models.
 
 
 This R package implements the specification tests proposed in Sant'Anna and
