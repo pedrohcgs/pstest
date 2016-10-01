@@ -30,15 +30,11 @@
 
 
 ###############################################################
-pstest = function(d, pscore, xpscore, model = "logit", nboot = 1000, cores = 1) {
+pstest = function(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000, cores = 1) {
     n <- length(d)
     xx <- as.matrix(xpscore)
     pscore.fit <- pscore
     uhat <- d - pscore.fit
-    if ((model== "logit")+(model=="probit")==0) {
-      stop("model must be either 'logit' or 'probit'")
-    }
-
     if (model == "logit") {
         g <- pscore.fit * (1 - pscore.fit) * xx
     }
