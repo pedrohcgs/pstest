@@ -35,9 +35,9 @@ pstest = function(d, pscore, xpscore, model = "logit", nboot = 1000, cores = 1) 
     xx <- as.matrix(xpscore)
     pscore.fit <- pscore
     uhat <- d - pscore.fit
-    if (model!= "logit" | model!="probit") {
-      stop("model must be either 'logit' or 'probit'")
-    }
+    #if (model!= "logit" | model!="probit") {
+    #  stop("model must be either 'logit' or 'probit'")
+    #}
     if (model == "logit") {
         g <- pscore.fit * (1 - pscore.fit) * xx
     }
