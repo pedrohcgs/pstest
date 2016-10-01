@@ -2,13 +2,12 @@ Package: pstest
 Type: Package
 Title: Specification Tests for Parametric Propensity Score Models
 Version: 0.1.0.901
-Authors@R: as.person(c(
-      "Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>[aut,cre]",
-      "Xiaojun Song <xj@gsm.pku.edu.cn>[ctb]"))
+Author: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>, Xiajoun Song <sxj@gsm.pku.edu.cn>
+Maintainer: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>
 Description: Provide specification tests for parametric propensity score
-    models. In short, this package implement all the tests
+    models. In short, this package implements all the tests
     proposed in Sant'Anna and Song (2016), "Specification Tests for the Propensity
-    Score"."
+    Score".
 URL: https://github.com/pedrohcgs/pstest
 Depends:
     R (>= 3.1)
@@ -20,3 +19,4 @@ Imports:
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1
+Date: 2016-10-01 15:51
