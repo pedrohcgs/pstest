@@ -1,4 +1,4 @@
-#' pstest: Specification Tests for the Propensity Score
+#' pstest: Tests for the Propensity Score
 #'
 #' \emph{pstest} computes Kolmogorov-Smirnov and Cramer-von Mises type tests
 #' for the null hypothesis that a parametric model for the propensity score is

@@ -2,7 +2,7 @@
 % Please edit documentation in R/pstest.R
 \name{pstest}
 \alias{pstest}
-\title{pstest: Specification Tests for the Propensity Score}
+\title{pstest: Tests for the Propensity Score}
 \usage{
 pstest(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000,
   cores = 1)
