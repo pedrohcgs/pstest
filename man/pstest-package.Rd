@@ -10,11 +10,11 @@ Song (2016), 'Specification Tests for the Propensity Score', available at
 Pedro H.C. Sant'Anna webpage, \url{http://sites.google.com/site/pedrohcsantanna/} .
 }
 \details{
-In short, this package implements bootstrapped based Kolmogorov-Smirnov
+In short, this package implement bootstrapped based Kolmogorov-Smirnov
 and Cramer-von Mises type tests for parametric propensity score models with
 either logistic ('logit'), or standard normal ('probit') link function.
 
-The module was written by Pedro H.C. Sant'Anna (Vanderbilt University) and Xiaojun Song (Peking University).
+The module was written by Pedro H.C. Sant'Anna (Vanderbilt University).
 
 A help file with examples will be made available in the near future.
 }
