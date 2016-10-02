@@ -44,7 +44,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000
     }
     gg <- (t(g) %*% g)
     gginv <- solve(gg)
-    w <- as.integer(outer(pscore.fit, unique(pscore.fit), "<="))
+    w <- (outer(pscore.fit, unique(pscore.fit), "<="))
     Gw <- t(g) %*% w
     beta <- gginv %*% Gw
     w1 <- w - g %*% beta
