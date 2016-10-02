@@ -43,7 +43,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000
         g <- stats::dnorm(beta.x) * xx
     }
     gg <- (t(g) %*% g)
-    gginv <- MASS::ginv(gg)
+    gginv <- solve(gg)
     w <- outer(pscore.fit, pscore.fit, "<=")
     Gw <- t(g) %*% w
     beta <- gginv %*% Gw
