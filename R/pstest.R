@@ -30,7 +30,8 @@
 
 
 ###############################################################
-pstest = function(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000, cores = 1) {
+pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
+                  nboot = 1000, cores = 1) {
     n <- length(d)
     xx <- as.matrix(xpscore)
     pscore.fit <- pscore
