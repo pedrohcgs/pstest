@@ -5,7 +5,7 @@
 \title{pstest: Tests for the Propensity Score}
 \usage{
 pstest(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000,
-  cores = 1)
+  cores = 1, big = FALSE)
 }
 \arguments{
 \item{d}{vector containing the binary treatment indicator}
@@ -24,6 +24,11 @@ The alternatives are: 'logit' (default), and 'probit'.}
 \item{cores}{number of cores to use during the bootstrap (default is 1).
 If cores>1, the bootstrap is conducted using parLapply, instead
 of lapply type call.}
+
+\item{big}{logical value indication if you have "big data". Default is
+FALSE. It is recommended to first try with the default. If function
+return a memory error, try to set big = TRUE to see if solves the
+issue.}
 }
 \value{
 a list containing the Kolmogorov-Smirnov and Cramer-von Mises test
