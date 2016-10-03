@@ -43,14 +43,13 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000
         g <- stats::dnorm(beta.x) * xx
         rm(beta.x)
     }
-    gg <- (t(g) %*% g)
-    gginv <- solve(gg)
+    gg <- crossprod(g)
     w <- (outer(pscore.fit, unique(pscore.fit), "<="))
-    Gw <- t(g) %*% w
-    beta <- gginv %*% Gw
+    Gw <- crossprod(g,w)
+    beta <- solve(gg,Gw)
     w1 <- w - g %*% beta
     #drop elements to save memory
-    rm(w,Gw,beta,gginv,gg,g,xx,pscore.fit)
+    rm(w,Gw,beta,gg,g,xx,pscore.fit)
     gc()
     #Get the functions we need
     Rw <- colSums(uhat * w1)/n
