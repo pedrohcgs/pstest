@@ -41,6 +41,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000
     if (model == "probit") {
         beta.x <- stats::qnorm(pscore.fit)
         g <- stats::dnorm(beta.x) * xx
+        rm(beta.x)
     }
     gg <- (t(g) %*% g)
     gginv <- solve(gg)
@@ -48,8 +49,10 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000
     Gw <- t(g) %*% w
     beta <- gginv %*% Gw
     w1 <- w - g %*% beta
-    rm(w)
+    #drop elements to save memory
+    rm(w,Gw,beta,gginv,gg,g,xx,pscore.fit)
     gc()
+    #Get the functions we need
     Rw <- colSums(uhat * w1)/n
     cvmtest <- sum(Rw^2)
     kstest <- sqrt(n) * max(abs(Rw))
