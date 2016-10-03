@@ -16,6 +16,10 @@
 #'@param cores number of cores to use during the bootstrap (default is 1).
 #'        If cores>1, the bootstrap is conducted using parLapply, instead
 #'        of lapply type call.
+#'@param big logical value indication if you have "big data". Default is
+#'        FALSE. It is recommended to first try with the default. If function
+#'        return a memory error, try to set big = TRUE to see if solves the
+#'        issue.
 #'
 #'@return a list containing the Kolmogorov-Smirnov and Cramer-von Mises test
 #'        statistics for the null hypothesis of correctly specified propensity
@@ -31,7 +35,7 @@
 
 ###############################################################
 pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
-                  nboot = 1000, cores = 1) {
+                  nboot = 1000, cores = 1, big = FALSE) {
     n <- length(d)
     xx <- as.matrix(xpscore)
     pscore.fit <- pscore
@@ -45,18 +49,17 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         rm(beta.x)
     }
     gg <- crossprod(g)
+
+    #Handle first the case in which I have enough memory to solve
+    if (big==FALSE){
     w <- (outer(pscore.fit, unique(pscore.fit), "<="))
-    Gw <- crossprod(g,w)
-    beta <- solve(gg,Gw)
+    Gw <- crossprod(g, w)
+    beta <- solve(gg, Gw)
     w1 <- w - g %*% beta
-    #drop elements to save memory
-    rm(w,Gw,beta,gg,g,xx,pscore.fit)
-    gc()
     #Get the functions we need
     Rw <- colSums(uhat * w1)/n
     cvmtest <- sum(Rw^2)
     kstest <- sqrt(n) * max(abs(Rw))
-
 
     # Use the Mammen(1993) binary V's
     k1 <- 0.5 * (1 - 5^0.5)
@@ -69,23 +72,23 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
 
     Seed <- matrix(nrow = nboot, ncol = 6)
     for (i in 1:nboot) {
-        Seed[i, ] <- seed.temp[[i]][2:7]
+      Seed[i, ] <- seed.temp[[i]][2:7]
     }
 
     bootapply <- function(nn, n, pkappa, k1, k2, uhat, Seed) {
-        # to make each run fully reproducible, we set the seed
-        seed.run <- Seed[nn, ]
-        set.seed(seed.run, "L'Ecuyer-CMRG")
-        v <- stats::rbinom(n, 1, pkappa)
-        v <- ifelse(v == 1, k1, k2)
-        # Bootstrapped emprirical process
-        Rwb <- colSums(uhat * v * w1)/n
-        # KS test
-        ksb <- sqrt(n) * max(abs(Rwb))
-        # Cramer-von Mises test
-        cvmb <- sum(Rwb^2)
-        # Return both tests
-        return(cbind(ksb, cvmb))
+      # to make each run fully reproducible, we set the seed
+      seed.run <- Seed[nn, ]
+      set.seed(seed.run, "L'Ecuyer-CMRG")
+      v <- stats::rbinom(n, 1, pkappa)
+      v <- ifelse(v == 1, k1, k2)
+      # Bootstrapped emprirical process
+      Rwb <- colSums(uhat * v * w1)/n
+      # KS test
+      ksb <- sqrt(n) * max(abs(Rwb))
+      # Cramer-von Mises test
+      cvmb <- sum(Rwb^2)
+      # Return both tests
+      return(cbind(ksb, cvmb))
     }
 
     if (cores==1){
@@ -96,9 +99,9 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     if (cores>1){
       cl <- parallel::makeCluster(cores)
       boottests <- parallel::parLapply(cl, 1:nboot, bootapply,
-                                     n, pkappa, k1, k2,
-                                     uhat, Seed)
-    parallel::stopCluster(cl)
+                                       n, pkappa, k1, k2,
+                                       uhat, Seed)
+      parallel::stopCluster(cl)
     }
 
     # Put the Bootstrap resuls in a matrix
@@ -110,6 +113,59 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     # compute the Bootstrap P-value
     pvksb <- sum((boottest[, 1] > kstest))/nboot
     pvcvmb <- sum((boottest[, 2] > cvmtest))/nboot
+    }
+###############################################################
+###############################################################
+
+    #Now, let us try to solve the case with "big data"
+    if (big==TRUE){
+      #Number of covariates
+      k.dim=dim(xx)[2]
+
+      #unique pscores
+      un.pscores=unique(pscore.fit)
+      n.unique=length(un.pscores)
+      ## initialize `beta` matrix (K coefficients for each of N responses)
+      beta <- matrix(0, k.dim, n.unique)
+
+
+      ## we split n columns into l tiles, each with 1000 columns
+      l=floor(n.unique / 1000) + 1
+
+      #Let's define some parameters for the bootstrap already
+      # Use the Mammen(1993) binary V's
+      k1 <- 0.5 * (1 - 5^0.5)
+      k2 <- 0.5 * (1 + 5^0.5)
+      pkappa <- 0.5 * (1 + 5^0.5)/(5^0.5)
+
+      ## Define seeds
+      ss <- floor(stats::runif(1) * 10000)
+      seed.temp <- harvestr::gather(nboot, seed = ss)
+
+      Seed <- matrix(nrow = nboot, ncol = 6)
+      for (i in 1:nboot) {
+        Seed[i, ] <- seed.temp[[i]][2:7]
+      }
+
+
+      for (i in 1:l) {
+        start <- min(1000 * (i-1) + 1, n.unique)    ## chunk start
+        end <- min(1000 * i, n.unique)    ## chunk end
+        w.temp <- outer(pscore.fit, un.pscores[start:end], "<=")
+        Gw <- crossprod(g, w.temp)
+        beta[, start:end] <- solve(gg, Gw)
+        w1.temp <- uhat * (w.temp - g %*% beta[, start:end])
+        Rw[start:end] <- colSums(w1.temp)/n
+      }
+      cvmtest <- sum(Rw^2)
+      kstest <- sqrt(n) * max(abs(Rw))
+      pvksb=NA
+      pvcvmb=NA
+
+
+    }
+
+
 
     list(kstest = kstest, cvmtest = cvmtest,
          pvks = pvksb, pvcvm = pvcvmb)
