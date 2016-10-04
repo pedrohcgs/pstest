@@ -95,20 +95,20 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         }
 
         if (cores == 1) {
-            boottests <- lapply(1:nboot, bootapply, n, pkappa, k1, k2,
+            boottest <- lapply(1:nboot, bootapply, n, pkappa, k1, k2,
                                 uhat, w1, Seed)
         }
 
         if (cores > 1) {
             cl <- parallel::makeCluster(cores)
-            boottests <- parallel::parLapply(cl, 1:nboot, bootapply, n,
+            boottest <- parallel::parLapply(cl, 1:nboot, bootapply, n,
                                              pkappa, k1, k2,
                 uhat, w1, Seed)
             parallel::stopCluster(cl)
         }
 
         # Put the Bootstrap resuls in a matrix
-        boottest <- t(matrix(unlist(boottests), 2, nboot))
+        boottest <- t(matrix(unlist(boottest), 2, nboot))
 
         # Name the Columns
         colnames(boottest) <- c("ksb", "cvmb")
@@ -204,22 +204,22 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
 
             #Put these guys in a vector now
             # Compute the KSb and CvMb over chunks
-            if (1000 * (i - 1) + 1 <= n.unique) {
-              ksb1[, i] <- boot.chunk[, 1]
-              cvmb1[, i] <- boot.chunk[, 2]
-            }
+            #if (1000 * (i - 1) + 1 <= n.unique) {
+            #  ksb1[, i] <- boot.chunk[, 1]
+            #  cvmb1[, i] <- boot.chunk[, 2]
+            #}
 
 
 
 
             # Compute the KSb and CvMb over chunks
-            #if (1000 * (i - 1) + 1 <= n.unique) {
+            if (1000 * (i - 1) + 1 <= n.unique) {
                 # First KsB (maximum between the KSB in this chunk and
                 # the previous maximum)
-           #     boottest[, 1] <- pmax(boottest[, 1], boot.chunk1[, 1])
+                boottest[, 1] <- pmax(boottest[, 1], boot.chunk[, 1])
                 # Now the Cvmb, which i just need to sum
-           #     boottest[, 2] <- sum(boottest[, 2], boot.chunk1[, 2])
-           # }
+                boottest[, 2] <- sum(boottest[, 2], boot.chunk[, 2])
+            }
 
         }
         # close the clusters
@@ -230,9 +230,9 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         cvmtest1 <- sum(Rw^2)
         kstest1 <- sqrt(n) * max(abs(Rw))
         # Name the Columns
-        boottest <- matrix(0, nboot, 2)
-        boottest[, 1] <- apply(ksb1, 1, max)
-        boottest[, 2] <- apply(cvmb1, 1, sum)
+        #boottest <- matrix(0, nboot, 2)
+        #boottest[, 1] <- apply(ksb1, 1, max)
+        #boottest[, 2] <- apply(cvmb1, 1, sum)
 
         colnames(boottest) <- c("ksb", "cvmb")
 
