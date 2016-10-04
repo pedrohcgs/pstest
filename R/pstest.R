@@ -34,7 +34,7 @@
 #'@importFrom harvestr gather
 
 
-###############################################################
+#-------------------------------------------------------------------------------
 pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
                   nboot = 1000, cores = 1, big = FALSE) {
 
@@ -52,6 +52,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     }
     gg <- crossprod(g)
 
+    #----------------------------------------------------------------------------
     # Handle first the case in which I have enough memory to solve
     if (big == FALSE) {
         w <- (outer(pscore.fit, unique(pscore.fit), "<="))
@@ -68,7 +69,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         k2 <- 0.5 * (1 + 5^0.5)
         pkappa <- 0.5 * (1 + 5^0.5)/(5^0.5)
 
-        ## Define seeds
+        # Define seeds
         ss <- floor(stats::runif(1) * 10000)
         seed.temp <- harvestr::gather(nboot, seed = ss)
 
@@ -116,7 +117,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         pvksb <- sum((boottest[, 1] > kstest1))/nboot
         pvcvmb <- sum((boottest[, 2] > cvmtest1))/nboot
     }
-    ###############################################################
+    #------------------------------------------------------------------------
 
     # Now, let us try to solve the case with 'big data'
     if (big == TRUE) {
@@ -126,20 +127,20 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         # unique pscores
         un.pscores <- unique(pscore.fit)
         n.unique <- length(un.pscores)
-        ## initialize `beta` matrix (K coefficients for each of
+        # Initialize `beta` matrix (K coefficients for each of
         #n.unique responses)
         beta <- matrix(0, k.dim, n.unique)
-        ## initialize `Rw` row vector (n.unique dimension)
+        # Initialize `Rw` row vector (n.unique dimension)
         Rw <- matrix(0, 1, n.unique)
 
         # Initialize the bootststrap vector
         boottest <- matrix(0, nboot, 2)
 
-        ## we split n columns into l tiles, each with 1000 columns
+        # We split n columns into l tiles, each with 1000 columns
         l <- floor(n.unique/1000) + 1
 
         # Let's define some parameters for the bootstrap
-        #Better to define these outside the
+        # Better to define these outside the
         # loop, so we define only once
 
         # Use the Mammen(1993) binary V's
@@ -172,8 +173,6 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
             return(cbind(ksb, cvmb))
         }
 
-
-
         for (i in 1:l) {
             start <- min(1000 * (i - 1) + 1, n.unique)  ## chunk start
             end <- min(1000 * i, n.unique)  ## chunk end
@@ -202,7 +201,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
             # Compute the KSb and CvMb over chunks
             if (1000 * (i - 1) + 1 <= n.unique) {
                 # First KsB (maximum between the KSB in this chunk and
-              #the previous maximum)
+                # the previous maximum)
                 boottest[, 1] <- pmax(boottest[, 1], boot.chunk1[, 1])
                 # Now the Cvmb, which i just need to sum
                 boottest[, 2] <- sum(boottest[, 2], boot.chunk1[, 2])
@@ -219,10 +218,10 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         pvksb <- sum((boottest[, 1] > kstest1))/nboot
         pvcvmb <- sum((boottest[, 2] > cvmtest1))/nboot
 
-
     }
 
-
+    #---------------------------------------------------------------------
+    # Return these
 
     list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb)
 }
