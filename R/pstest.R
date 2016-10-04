@@ -133,11 +133,13 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         # Initialize `Rw` row vector (n.unique dimension)
         Rw <- matrix(0, 1, n.unique)
 
-        # Initialize the bootststrap vector
-        boottest <- matrix(0, nboot, 2)
 
         # We split n columns into l tiles, each with 1000 columns
         l <- floor(n.unique/1000) + 1
+
+        # Initialize the bootststrap vector
+        ksb1 <- matrix(0, nboot, l)
+        cvmb1 <- matrix(0, nboot, l)
 
         # Let's define some parameters for the bootstrap
         # Better to define these outside the
@@ -157,14 +159,14 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
             Seed[i, ] <- seed.temp[[i]][2:7]
         }
 
-        bootapply <- function(nn, n, pkappa, k1, k2, uhat, w1, Seed) {
+        bootapply <- function(nn, n, pkappa, k1, k2, uhat, w1.temp, Seed) {
             # to make each run fully reproducible, we set the seed
             seed.run <- Seed[nn, ]
             set.seed(seed.run, "L'Ecuyer-CMRG")
             v <- stats::rbinom(n, 1, pkappa)
             v <- ifelse(v == 1, k1, k2)
             # Bootstrapped emprirical process
-            Rwb <- colSums(uhat * v * w1)/n
+            Rwb <- colSums(uhat * v * w1.temp)/n
             # KS test
             ksb <- sqrt(n) * max(abs(Rwb))
             # Cramer-von Mises test
@@ -197,14 +199,24 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
             # Put the Bootstrap resuls in a matrix
             boot.chunk1 <- t(matrix(unlist(boot.chunk), 2, nboot))
 
+            #Put these guys in a vector now
             # Compute the KSb and CvMb over chunks
             if (1000 * (i - 1) + 1 <= n.unique) {
+              ksb1[, i] <- boot.chunk1[, 1]
+              cvmb1[, i] <- boot.chunk1[, 2]
+            }
+
+
+
+
+            # Compute the KSb and CvMb over chunks
+            #if (1000 * (i - 1) + 1 <= n.unique) {
                 # First KsB (maximum between the KSB in this chunk and
                 # the previous maximum)
-                boottest[, 1] <- pmax(boottest[, 1], boot.chunk1[, 1])
+           #     boottest[, 1] <- pmax(boottest[, 1], boot.chunk1[, 1])
                 # Now the Cvmb, which i just need to sum
-                boottest[, 2] <- sum(boottest[, 2], boot.chunk1[, 2])
-            }
+           #     boottest[, 2] <- sum(boottest[, 2], boot.chunk1[, 2])
+           # }
 
         }
         # close the clusters
@@ -212,10 +224,13 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
           parallel::stopCluster(cl)
         }
 
-
         cvmtest1 <- sum(Rw^2)
         kstest1 <- sqrt(n) * max(abs(Rw))
         # Name the Columns
+        boottest <- matrix(0, nboot, 2)
+        boottest[, 1] <- apply(ksb1, 1, max)
+        boottest[, 1] <- apply(cvmb1, 1, sum)
+
         colnames(boottest) <- c("ksb", "cvmb")
 
         # compute the Bootstrap P-value
