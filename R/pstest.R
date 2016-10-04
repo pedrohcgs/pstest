@@ -229,7 +229,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         # Name the Columns
         boottest <- matrix(0, nboot, 2)
         boottest[, 1] <- apply(ksb1, 1, max)
-        boottest[, 1] <- apply(cvmb1, 1, sum)
+        boottest[, 2] <- apply(cvmb1, 1, sum)
 
         colnames(boottest) <- c("ksb", "cvmb")
 
