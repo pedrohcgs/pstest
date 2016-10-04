@@ -138,6 +138,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         l <- floor(n.unique/1000) + 1
 
         # Initialize the bootststrap vector
+        boottest <- matrix(0, nboot, 2)
         ksb1 <- matrix(0, nboot, l)
         cvmb1 <- matrix(0, nboot, l)
 
