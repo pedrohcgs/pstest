@@ -20,8 +20,7 @@ pstest(d, pscore, xpscore, model = c("logit", "probit"),
 
 \item{cores}{number of cores to use during the bootstrap. Default is 1. If cores is greater than 1, the bootstrap is conducted using parLapply, instead of lapply type call.}
 
-\item{chunk}{a value that determine the size of each 'tile'. Such argument is used
-to splitthe original data into chunks, saving memory. Default value is 1,000. If the \emph{pstest} function throw a memory error, you should choose a smaller value for \emph{chunk}.}
+\item{chunk}{a value that determine the size of each 'tile'. Such argument is used to splitthe original data into chunks, saving memory. Default value is 1,000. If the \emph{pstest} function throw a memory error, you should choose a smaller value for \emph{chunk}.}
 }
 \value{
 \emph{pstest} returns a list containing the Kolmogorov-Smirnov and Cramer-von Mises test statistics for the null hypothesis of correctly specified propensity score model (kstest and cvmtest, respectively), and their associated bootstrapped p-values, pvks and pvcvm, respectively.
@@ -33,9 +32,6 @@ to splitthe original data into chunks, saving memory. Default value is 1,000. If
 
 
 \details{
-\emph{pstest} computes Kolmogorov-Smirnov and Cramer-von Mises type tests
-for the null hypothesis that a parametric model for the propensity score is
-is correctly specified. For details of the testing procedure, see
-Sant'Anna and Song (2016), 'Specification Tests for the Propensity Score'.
+\emph{pstest} computes Kolmogorov-Smirnov and Cramer-von Mises type tests for the null hypothesis that a parametric model for the propensity score is is correctly specified. For details of the testing procedure, see Sant'Anna and Song (2016), 'Specification Tests for the Propensity Score'.
 }
 
