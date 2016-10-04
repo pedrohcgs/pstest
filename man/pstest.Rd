@@ -5,31 +5,31 @@
 \title{pstest: Tests for the Propensity Score}
 \usage{
 pstest(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000,
-  cores = 1, big = FALSE)
+  cores = 1, chunk = 1000)
 }
 \arguments{
-\item{d}{vector containing the binary treatment indicator}
+\item{d}{a vector containing the binary treatment indicator.}
 
-\item{pscore}{vector containing the fitted propensity score}
+\item{pscore}{a vector containing the estimated propensity scores.}
 
-\item{xpscore}{matrix (or data frame) containing the covariates (and their
+\item{xpscore}{a matrix (or data frame) containing the covariates (and their
 transformations) included in the propensity score
-estimation. You should always include a constant term.}
+estimation. It should also include the constant term.}
 
-\item{model}{functional form (link function) employed while estimating the
-propensity score. The alternatives are: 'logit' (default),
-and 'probit'.}
+\item{model}{a description of the functional form (link function) used
+to estimated propensity score. The alternatives are:
+'logit' (default), and 'probit'.}
 
-\item{nboot}{number of bootstrap draws. Default is 1,000.}
+\item{nboot}{number of bootstrap replicates to perform. Default is 1,000.}
 
-\item{cores}{number of cores to use during the bootstrap (default is 1).
-If cores>1, the bootstrap is conducted using parLapply, instead
-of lapply type call.}
+\item{cores}{number of cores to use during the bootstrap. Default is 1.
+If cores is greater than 1, the bootstrap is conducted using
+parLapply, instead of lapply type call.}
 
-\item{big}{logical value indication if you have "big data". Default is
-FALSE. It is recommended to first try with the default. If function
-return a memory error, try to set big = TRUE to see if solves the
-issue.}
+\item{chunk}{a value that determine the size of each 'tile'. Such argument is used
+to splitthe original data into chunks, saving memory.
+Default value is 1,000. If the \emph{pstest} function throw a
+memory error, you should choose a smaller value for \emph{chunk}.}
 }
 \value{
 a list containing the Kolmogorov-Smirnov and Cramer-von Mises test

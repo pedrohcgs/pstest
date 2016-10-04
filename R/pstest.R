@@ -29,11 +29,8 @@
 #'
 #'@export
 #'@importFrom stats binomial rbinom runif
-#'@importFrom MASS ginv
 #'@importFrom parallel makeCluster parLapply stopCluster
 #'@importFrom harvestr gather
-
-
 #-------------------------------------------------------------------------------
 pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
                   nboot = 1000, cores = 1, chunk = 1000) {
@@ -43,6 +40,8 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     xx <- as.matrix(xpscore)
     pscore.fit <- pscore
     uhat <- d - pscore.fit
+    #-----------------------------------------------------------------------------
+    # #Define the score variables for the projection
     if (model == "logit") {
         g <- pscore.fit * (1 - pscore.fit) * xx
     }
@@ -52,7 +51,8 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         rm(beta.x)
     }
     gg <- crossprod(g)
-
+    #-----------------------------------------------------------------------------
+    # Define variables to be used in the loop
     # Number of covariates
     k.dim = dim(xx)[2]
 
@@ -72,7 +72,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     # Initialize the bootststrap vector
     ksb1 <- matrix(0, nboot, l)
     cvmb1 <- matrix(0, nboot, l)
-
+    #-----------------------------------------------------------------------------
     # Let's define some parameters for the bootstrap
     # Better to define these outside the loop that will follow.
 
@@ -81,17 +81,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     k2 <- 0.5 * (1 + 5^0.5)
     pkappa <- 0.5 * (1 + 5^0.5)/(5^0.5)
 
-    # Define seeds: Guarantee reproducibility
-    ss <- floor(stats::runif(1) * 10000)
-    seed.temp <- harvestr::gather(nboot, seed = ss)
-
-    Seed <- matrix(nrow = nboot, ncol = 6)
-    for (i in 1:nboot) {
-        Seed[i, ] <- seed.temp[[i]][2:7]
-    }
-
     # function for the bootstrap
-
     bootapply <- function(nn, n, pkappa, k1, k2, uhat, w1.temp, Seed) {
         # to make each run fully reproducible, we set the seed
         seed.run <- Seed[nn, ]
@@ -107,14 +97,22 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         # Return both tests
         return(cbind(ksb, cvmb))
     }
+    #-----------------------------------------------------------------------------
+    # Define seeds: Guarantee reproducibility
+    ss <- floor(stats::runif(1) * 10000)
+    seed.temp <- harvestr::gather(nboot, seed = ss)
 
+    Seed <- matrix(nrow = nboot, ncol = 6)
+    for (i in 1:nboot) {
+      Seed[i, ] <- seed.temp[[i]][2:7]
+    }
+    #-----------------------------------------------------------------------------
     # If we are going to use paralell coding, initialize the cores
     if (cores > 1) {
         cl <- parallel::makeCluster(cores)
     }
-
-    # Start the loop to compute the tests We do this to save memory
-
+    #-----------------------------------------------------------------------------
+    # Start the loop to compute the tests (this is more memory efficient)
     for (i in 1:l) {
         start <- min(chunk * (i - 1) + 1, n.unique)
         end <- min(chunk * i, n.unique)
@@ -128,46 +126,40 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
             boot.chunk <- lapply(1:nboot, bootapply, n, pkappa, k1, k2,
                                  uhat, w1.temp, Seed)
         }
-
         if (cores > 1) {
             boot.chunk <- parallel::parLapply(cl, 1:nboot, bootapply, n,
                                               pkappa, k1, k2, uhat, w1.temp, Seed)
         }
-
         # Put the Bootstrap resuls in a matrix
         boot.chunk <- t(matrix(unlist(boot.chunk), 2, nboot))
-
         # Compute the KSb and CvMb over chunks
         if (1000 * (i - 1) + 1 <= n.unique) {
             ksb1[, i] <- boot.chunk[, 1]
             cvmb1[, i] <- boot.chunk[, 2]
         }
-
-
     }
+    #-----------------------------------------------------------------------------
     # close the clusters, if we used paralell
     if (cores > 1) {
         parallel::stopCluster(cl)
     }
-
+    #-----------------------------------------------------------------------------
     # Compute our test statistics
     cvmtest1 <- sum(Rw^2)
     kstest1 <- sqrt(n) * max(abs(Rw))
-
+    #-----------------------------------------------------------------------------
     # Put the bootstrap tests in a matrix
     boottest <- matrix(0, nboot, 2)
     boottest[, 1] <- apply(ksb1, 1, max)
     boottest[, 2] <- apply(cvmb1, 1, sum)
-
+    #-----------------------------------------------------------------------------
     # Name the Columns
     colnames(boottest) <- c("ksb", "cvmb")
-
+    #-----------------------------------------------------------------------------
     # compute the Bootstrap P-value
     pvksb <- sum((boottest[, 1] > kstest1))/nboot
     pvcvmb <- sum((boottest[, 2] > cvmtest1))/nboot
-
     #---------------------------------------------------------------------
     # Return these variables
-
     list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb)
 }

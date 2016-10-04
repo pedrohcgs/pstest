@@ -12,7 +12,6 @@ URL: https://github.com/pedrohcgs/pstest
 Depends:
     R (>= 3.1)
 Imports:
-    MASS (>= 7.0),
     stats,
     parallel,
     harvestr
