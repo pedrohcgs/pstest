@@ -16,8 +16,9 @@ pstest(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000,
 transformations) included in the propensity score
 estimation. You should always include a constant term.}
 
-\item{model}{functional form (link function) employed while estimating the propensity score.
-The alternatives are: 'logit' (default), and 'probit'.}
+\item{model}{functional form (link function) employed while estimating the
+propensity score. The alternatives are: 'logit' (default),
+and 'probit'.}
 
 \item{nboot}{number of bootstrap draws. Default is 1,000.}
 
@@ -33,8 +34,8 @@ issue.}
 \value{
 a list containing the Kolmogorov-Smirnov and Cramer-von Mises test
        statistics for the null hypothesis of correctly specified propensity
-       score model (kstest and cvmtest, respectively), and their associate bootstrapped
-       p-values, pvks and pvcvm, respectively.
+       score model (kstest and cvmtest, respectively), and their associate
+       bootstrapped p-values, pvks and pvcvm, respectively.
 }
 \description{
 \emph{pstest} computes Kolmogorov-Smirnov and Cramer-von Mises type tests
