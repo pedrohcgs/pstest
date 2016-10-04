@@ -192,7 +192,6 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
                 boot.chunk <- parallel::parLapply(cl, 1:nboot, bootapply,
                                                   n, pkappa, k1,
                                                   k2, uhat, w1.temp, Seed)
-                parallel::stopCluster(cl)
             }
 
             # Put the Bootstrap resuls in a matrix
@@ -208,6 +207,11 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
             }
 
         }
+        # close the clusters
+        if (cores > 1) {
+          parallel::stopCluster(cl)
+        }
+
 
         cvmtest1 <- sum(Rw^2)
         kstest1 <- sqrt(n) * max(abs(Rw))
