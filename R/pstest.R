@@ -185,8 +185,8 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
             w.temp <- outer(pscore.fit, un.pscores[start:end], "<=")
             Gw <- crossprod(g, w.temp)
             beta[, start:end] <- solve(gg, Gw)
-            w1.temp <- uhat * (w.temp - g %*% beta[, start:end])
-            Rw[start:end] <- colSums(w1.temp)/n
+            w1.temp <- (w.temp - g %*% beta[, start:end])
+            Rw[start:end] <- colSums(uhat * w1.temp)/n
             # Now the bootstrapped test in the chunk
             if (cores == 1) {
                 boot.chunk <- lapply(1:nboot, bootapply, n, pkappa, k1,
@@ -200,13 +200,13 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
             }
 
             # Put the Bootstrap resuls in a matrix
-            boot.chunk1 <- t(matrix(unlist(boot.chunk), 2, nboot))
+            boot.chunk <- t(matrix(unlist(boot.chunk), 2, nboot))
 
             #Put these guys in a vector now
             # Compute the KSb and CvMb over chunks
             if (1000 * (i - 1) + 1 <= n.unique) {
-              ksb1[, i] <- boot.chunk1[, 1]
-              cvmb1[, i] <- boot.chunk1[, 2]
+              ksb1[, i] <- boot.chunk[, 1]
+              cvmb1[, i] <- boot.chunk[, 2]
             }
 
 
