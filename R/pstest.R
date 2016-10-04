@@ -125,9 +125,10 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
       #unique pscores
       un.pscores=unique(pscore.fit)
       n.unique=length(un.pscores)
-      ## initialize `beta` matrix (K coefficients for each of N responses)
+      ## initialize `beta` matrix (K coefficients for each of n.unique responses)
       beta <- matrix(0, k.dim, n.unique)
-
+      ## initialize `Rw` row vector (n.unique dimension)
+      Rw <- matrix(0, 1, n.unique)
 
       ## we split n columns into l tiles, each with 1000 columns
       l=floor(n.unique / 1000) + 1

@@ -2,7 +2,6 @@
 % Please edit documentation in R/pstest.package.R
 \docType{package}
 \name{pstest-package}
-\alias{pstest}
 \alias{pstest-package}
 \title{pstest: An R Package for assessing the goodness of fit of propensity score models.}
 \description{
