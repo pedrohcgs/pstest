@@ -175,6 +175,10 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
             return(cbind(ksb, cvmb))
         }
 
+        if (cores > 1) {
+          cl <- parallel::makeCluster(cores)
+        }
+
         for (i in 1:l) {
             start <- min(1000 * (i - 1) + 1, n.unique)  ## chunk start
             end <- min(1000 * i, n.unique)  ## chunk end
@@ -190,7 +194,6 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
             }
 
             if (cores > 1) {
-                cl <- parallel::makeCluster(cores)
                 boot.chunk <- parallel::parLapply(cl, 1:nboot, bootapply,
                                                   n, pkappa, k1,
                                                   k2, uhat, w1.temp, Seed)
