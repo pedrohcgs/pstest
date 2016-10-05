@@ -151,9 +151,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     # Put the bootstrap tests in a matrix
     boottest <- matrix(0, nboot, 2)
     boottest[, 1] <- ksb1
-      #apply(ksb1, 1, max)
     boottest[, 2] <- cvmb1
-      #apply(cvmb1, 1, sum)
     #-----------------------------------------------------------------------------
     # Name the Columns
     colnames(boottest) <- c("ksb", "cvmb")
