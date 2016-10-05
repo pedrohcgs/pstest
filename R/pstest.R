@@ -71,7 +71,6 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
 
     # Initialize the bootststrap test statistics vectors
     ksb1 <- matrix(0, nboot, 1)
-    cvmb1 <- matrix(0, nboot, 1)
     #-----------------------------------------------------------------------------
     # Let's define some parameters for the bootstrap
     # Better to define these outside the loop that will follow.
@@ -134,8 +133,8 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         boot.chunk <- t(matrix(unlist(boot.chunk), 2, nboot))
         # Compute the KSb and CvMb over chunks
         if (1000 * (i - 1) + 1 <= n.unique) {
-          ksb1 <- pmax(ksb1,boot.chunk[, 1])
-          cvmb1 <- cvmb1+boot.chunk[, 2]
+          ksb1 <- pmax(ksb1, boot.chunk[, 1])
+          cvmb1 <- cvmb1 + boot.chunk[, 2]
         }
     }
     #-----------------------------------------------------------------------------
