@@ -70,10 +70,10 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     l <- floor(n.unique/chunk) + 1
 
     # Initialize the bootststrap vector
-    #ksb1 <- matrix(0, nboot, l)
-    #cvmb1 <- matrix(0, nboot, l)
-    ksb1 <- matrix(0, nboot, 1)
-    cvmb1 <- matrix(0, nboot, 1)
+    ksb1 <- matrix(0, nboot, l)
+    cvmb1 <- matrix(0, nboot, l)
+    #ksb1 <- matrix(0, nboot, 1)
+    #cvmb1 <- matrix(0, nboot, 1)
     #-----------------------------------------------------------------------------
     # Let's define some parameters for the bootstrap
     # Better to define these outside the loop that will follow.
@@ -136,10 +136,10 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         boot.chunk <- t(matrix(unlist(boot.chunk), 2, nboot))
         # Compute the KSb and CvMb over chunks
         if (1000 * (i - 1) + 1 <= n.unique) {
-          ksb1 <- pmax(ksb1,boot.chunk[, 1])
-          cvmb1 <- cvmb1+boot.chunk[, 2]
-            #ksb1[, i] <- boot.chunk[, 1]
-            #cvmb1[, i] <- boot.chunk[, 2]
+          #ksb1 <- pmax(ksb1,boot.chunk[, 1])
+          #cvmb1 <- cvmb1+boot.chunk[, 2]
+            ksb1[, i] <- boot.chunk[, 1]
+            cvmb1[, i] <- boot.chunk[, 2]
         }
     }
     #-----------------------------------------------------------------------------
@@ -154,10 +154,10 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     #-----------------------------------------------------------------------------
     # Put the bootstrap tests in a matrix
     boottest <- matrix(0, nboot, 2)
-    #boottest[, 1] <- apply(ksb1, 1, max)
-    #boottest[, 2] <- apply(cvmb1, 1, sum)
-    boottest[, 1] <- max(ksb1)
-    boottest[, 2] <- sum(cvmb1)
+    boottest[, 1] <- apply(ksb1, 1, max)
+    boottest[, 2] <- apply(cvmb1, 1, sum)
+    #boottest[, 1] <- max(ksb1)
+    #boottest[, 2] <- sum(cvmb1)
     #-----------------------------------------------------------------------------
     # Name the Columns
     colnames(boottest) <- c("ksb", "cvmb")
