@@ -71,6 +71,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
 
     # Initialize the bootststrap test statistics vectors
     ksb1 <- matrix(0, nboot, 1)
+    cvmb1 <- matrix(0, nboot, 1)
     #-----------------------------------------------------------------------------
     # Let's define some parameters for the bootstrap
     # Better to define these outside the loop that will follow.
