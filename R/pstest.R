@@ -21,6 +21,8 @@
 #'              to splitthe original data into chunks, saving memory.
 #'              Default value is 1,000. If the \emph{pstest} function throw a
 #'              memory error, you should choose a smaller value for \emph{chunk}.
+#'@param dist a description of which distribution to use during the bootstrap.
+#'            The alternatives are 'Mammen' (default), and 'Rademacher'.
 #'
 #'@return a list containing the Kolmogorov-Smirnov and Cramer-von Mises test
 #'        statistics for the null hypothesis of correctly specified propensity
@@ -33,7 +35,8 @@
 #'@importFrom harvestr gather
 #-------------------------------------------------------------------------------
 pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
-                  nboot = 1000, cores = 1, chunk = 1000) {
+                  nboot = 1000, cores = 1, chunk = 1000,
+                  dist = c("Mammen", "Rademacher")) {
     #-----------------------------------------------------------------------------
     # Define some underlying variables
     n <- length(d)
@@ -76,10 +79,19 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     # Let's define some parameters for the bootstrap
     # Better to define these outside the loop that will follow.
 
-    # Use the Mammen(1993) binary V's
-    k1 <- 0.5 * (1 - 5^0.5)
-    k2 <- 0.5 * (1 + 5^0.5)
-    pkappa <- 0.5 * (1 + 5^0.5)/(5^0.5)
+    if (dist == "Mammem"){
+      # Use the Mammen(1993) binary V's
+      k1 <- 0.5 * (1 - 5^0.5)
+      k2 <- 0.5 * (1 + 5^0.5)
+      pkappa <- 0.5 * (1 + 5^0.5)/(5^0.5)
+    }
+
+    if (dist =="Rademacher"){
+      # Use the Mammen(1993) binary V's
+      k1 <- 1
+      k2 <- -1
+      pkappa <- 0.5
+    }
 
     # function for the bootstrap
     bootapply <- function(nn, n, pkappa, k1, k2, uhat, w1.temp, Seed) {
