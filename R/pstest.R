@@ -79,15 +79,15 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     # Let's define some parameters for the bootstrap
     # Better to define these outside the loop that will follow.
 
-    if (dist == "Mammem"){
+    if (dist == "Mammen"){
       # Use the Mammen(1993) binary V's
       k1 <- 0.5 * (1 - 5^0.5)
       k2 <- 0.5 * (1 + 5^0.5)
       pkappa <- 0.5 * (1 + 5^0.5)/(5^0.5)
     }
 
-    if (dist =="Rademacher"){
-      # Use the Mammen(1993) binary V's
+    if (dist == "Rademacher"){
+      # Use the Rademacher V's
       k1 <- 1
       k2 <- -1
       pkappa <- 0.5
