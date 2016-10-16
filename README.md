@@ -14,5 +14,10 @@ The tests are based on the integrated conditional moment approach, where the wei
 
 The module was written by Pedro H.C. Sant'Anna (Vanderbilt University) and Xiaojun Song (Peking University).
 
+To install this package, you simply need to run the following two lines of code in R:
+
+        library(devtools)
+        install_github("pedrohcgs/pscore")
+
 
 A help file with examples will be made available in the near future.
