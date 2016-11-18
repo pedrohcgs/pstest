@@ -1,7 +1,7 @@
 Package: pstest
 Type: Package
 Title: Specification Tests for Parametric Propensity Score Models
-Version: 0.1.0.901
+Version: 0.1.0.902
 Author: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>, Xiajoun Song <sxj@gsm.pku.edu.cn>
 Maintainer: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>
 Description: Provide specification tests for parametric propensity score
@@ -18,4 +18,4 @@ Imports:
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Date: 2016-10-01 15:51
+Date: 2016-11-18 15:57
