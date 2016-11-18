@@ -5,7 +5,8 @@
 \title{pstest: Tests for the Propensity Score}
 \usage{
 pstest(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000,
-  cores = 1, chunk = 1000, dist = c("Mammen", "Rademacher"))
+  cores = 1, chunk = 1000, dist = c("Mammen", "Rademacher"),
+  w = c("ind", "exp", "logistic", "sin", "sincos"))
 }
 \arguments{
 \item{d}{a vector containing the binary treatment indicator.}
@@ -33,12 +34,19 @@ memory error, you should choose a smaller value for \emph{chunk}.}
 
 \item{dist}{a description of which distribution to use during the bootstrap.
 The alternatives are 'Mammen' (default), and 'Rademacher'.}
+
+\item{w}{a description of which weight function the projection is baded on.
+The alternatives are 'ind' (default), which stands for w(q,u)=1{q<=u},
+'exp', which stands for w(q,u)=exp(qu), 'logistic', which stands for
+w(q,u)=1/[1+exp(-qu)], 'sin', which stands for w(q,u)=sin(qu), and
+'sincos', which stands for w(q,u)=sin(qu)+cos(qu)}
 }
 \value{
 a list containing the Kolmogorov-Smirnov and Cramer-von Mises test
        statistics for the null hypothesis of correctly specified propensity
        score model (kstest and cvmtest, respectively), and their associate
-       bootstrapped p-values, pvks and pvcvm, respectively.
+       bootstrapped p-values, pvks and pvcvm, respectively. We also report the
+       weight function used.
 }
 \description{
 \emph{pstest} computes Kolmogorov-Smirnov and Cramer-von Mises type tests

@@ -24,10 +24,17 @@
 #'@param dist a description of which distribution to use during the bootstrap.
 #'            The alternatives are 'Mammen' (default), and 'Rademacher'.
 #'
+#'@param w a description of which weight function the projection is baded on.
+#'            The alternatives are 'ind' (default), which stands for w(q,u)=1{q<=u},
+#'            'exp', which stands for w(q,u)=exp(qu), 'logistic', which stands for
+#'            w(q,u)=1/[1+exp(-qu)], 'sin', which stands for w(q,u)=sin(qu), and
+#'            'sincos', which stands for w(q,u)=sin(qu)+cos(qu)
+#'
 #'@return a list containing the Kolmogorov-Smirnov and Cramer-von Mises test
 #'        statistics for the null hypothesis of correctly specified propensity
 #'        score model (kstest and cvmtest, respectively), and their associate
-#'        bootstrapped p-values, pvks and pvcvm, respectively.
+#'        bootstrapped p-values, pvks and pvcvm, respectively. We also report the
+#'        weight function used.
 #'
 #'@export
 #'@importFrom stats binomial rbinom runif
@@ -36,7 +43,8 @@
 #-------------------------------------------------------------------------------
 pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
                   nboot = 1000, cores = 1, chunk = 1000,
-                  dist = c("Mammen", "Rademacher")) {
+                  dist = c("Mammen", "Rademacher"),
+                  w = c("ind", "exp", "logistic", "sin", "sincos")) {
     #-----------------------------------------------------------------------------
     # Define some underlying variables
     n <- length(d)
@@ -125,22 +133,55 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     }
     #-----------------------------------------------------------------------------
     # Start the loop to compute the tests (this is more memory efficient)
-    for (i in 1:l) {
+    # we do a loop for each weight function, to avoid loss in speed
+    # indicator weight
+    if (w == "ind"){
+        for (i in 1:l) {
+          start <- min(chunk * (i - 1) + 1, n.unique)
+          end <- min(chunk * i, n.unique)
+          w.temp <- outer(pscore.fit, un.pscores[start:end], "<=")
+          Gw <- crossprod(g, w.temp)
+          beta[, start:end] <- solve(gg, Gw)
+          w1.temp <- (w.temp - g %*% beta[, start:end])
+          Rw[start:end] <- colSums(uhat * w1.temp)/n
+          # Now the bootstrapped test in the chunk
+          if (cores == 1) {
+              boot.chunk <- lapply(1:nboot, bootapply, n, pkappa, k1, k2,
+                                   uhat, w1.temp, Seed)
+          }
+          if (cores > 1) {
+              boot.chunk <- parallel::parLapply(cl, 1:nboot, bootapply, n,
+                                                pkappa, k1, k2, uhat, w1.temp, Seed)
+          }
+          # Put the Bootstrap resuls in a matrix
+          boot.chunk <- t(matrix(unlist(boot.chunk), 2, nboot))
+          # Compute the KSb and CvMb over chunks
+          if (1000 * (i - 1) + 1 <= n.unique) {
+            ksb1 <- pmax(ksb1, boot.chunk[, 1])
+            cvmb1 <- cvmb1 + boot.chunk[, 2]
+          }
+        }
+    }
+    #-----------------------------------------------------------------------------
+    # exponential weight
+    if (w == "exp"){
+      for (i in 1:l) {
         start <- min(chunk * (i - 1) + 1, n.unique)
         end <- min(chunk * i, n.unique)
-        w.temp <- outer(pscore.fit, un.pscores[start:end], "<=")
+        w.temp <- tcrossprod(pscore.fit, un.pscores[start:end])
+        w.temp <- exp(w.temp)
         Gw <- crossprod(g, w.temp)
         beta[, start:end] <- solve(gg, Gw)
         w1.temp <- (w.temp - g %*% beta[, start:end])
         Rw[start:end] <- colSums(uhat * w1.temp)/n
         # Now the bootstrapped test in the chunk
         if (cores == 1) {
-            boot.chunk <- lapply(1:nboot, bootapply, n, pkappa, k1, k2,
-                                 uhat, w1.temp, Seed)
+          boot.chunk <- lapply(1:nboot, bootapply, n, pkappa, k1, k2,
+                               uhat, w1.temp, Seed)
         }
         if (cores > 1) {
-            boot.chunk <- parallel::parLapply(cl, 1:nboot, bootapply, n,
-                                              pkappa, k1, k2, uhat, w1.temp, Seed)
+          boot.chunk <- parallel::parLapply(cl, 1:nboot, bootapply, n,
+                                            pkappa, k1, k2, uhat, w1.temp, Seed)
         }
         # Put the Bootstrap resuls in a matrix
         boot.chunk <- t(matrix(unlist(boot.chunk), 2, nboot))
@@ -149,6 +190,97 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
           ksb1 <- pmax(ksb1, boot.chunk[, 1])
           cvmb1 <- cvmb1 + boot.chunk[, 2]
         }
+      }
+    }
+    #-----------------------------------------------------------------------------
+    # Logistic weight
+    if (w == "logistic"){
+      for (i in 1:l) {
+        start <- min(chunk * (i - 1) + 1, n.unique)
+        end <- min(chunk * i, n.unique)
+        w.temp <- tcrossprod(pscore.fit, un.pscores[start:end])
+        w.temp <- 1/(1+exp(w.temp))
+        Gw <- crossprod(g, w.temp)
+        beta[, start:end] <- solve(gg, Gw)
+        w1.temp <- (w.temp - g %*% beta[, start:end])
+        Rw[start:end] <- colSums(uhat * w1.temp)/n
+        # Now the bootstrapped test in the chunk
+        if (cores == 1) {
+          boot.chunk <- lapply(1:nboot, bootapply, n, pkappa, k1, k2,
+                               uhat, w1.temp, Seed)
+        }
+        if (cores > 1) {
+          boot.chunk <- parallel::parLapply(cl, 1:nboot, bootapply, n,
+                                            pkappa, k1, k2, uhat, w1.temp, Seed)
+        }
+        # Put the Bootstrap resuls in a matrix
+        boot.chunk <- t(matrix(unlist(boot.chunk), 2, nboot))
+        # Compute the KSb and CvMb over chunks
+        if (1000 * (i - 1) + 1 <= n.unique) {
+          ksb1 <- pmax(ksb1, boot.chunk[, 1])
+          cvmb1 <- cvmb1 + boot.chunk[, 2]
+        }
+      }
+    }
+    #-----------------------------------------------------------------------------
+    # Sine weight
+    if (w == "sin"){
+      for (i in 1:l) {
+        start <- min(chunk * (i - 1) + 1, n.unique)
+        end <- min(chunk * i, n.unique)
+        w.temp <- tcrossprod(pscore.fit, un.pscores[start:end])
+        w.temp <- sin(w.temp)
+        Gw <- crossprod(g, w.temp)
+        beta[, start:end] <- solve(gg, Gw)
+        w1.temp <- (w.temp - g %*% beta[, start:end])
+        Rw[start:end] <- colSums(uhat * w1.temp)/n
+        # Now the bootstrapped test in the chunk
+        if (cores == 1) {
+          boot.chunk <- lapply(1:nboot, bootapply, n, pkappa, k1, k2,
+                               uhat, w1.temp, Seed)
+        }
+        if (cores > 1) {
+          boot.chunk <- parallel::parLapply(cl, 1:nboot, bootapply, n,
+                                            pkappa, k1, k2, uhat, w1.temp, Seed)
+        }
+        # Put the Bootstrap resuls in a matrix
+        boot.chunk <- t(matrix(unlist(boot.chunk), 2, nboot))
+        # Compute the KSb and CvMb over chunks
+        if (1000 * (i - 1) + 1 <= n.unique) {
+          ksb1 <- pmax(ksb1, boot.chunk[, 1])
+          cvmb1 <- cvmb1 + boot.chunk[, 2]
+        }
+      }
+    }
+    #-----------------------------------------------------------------------------
+    # Sine and cosine weight
+    if (w == "sincos"){
+      for (i in 1:l) {
+        start <- min(chunk * (i - 1) + 1, n.unique)
+        end <- min(chunk * i, n.unique)
+        w.temp <- tcrossprod(pscore.fit, un.pscores[start:end])
+        w.temp <- sin(w.temp)+cos(w.temp)
+        Gw <- crossprod(g, w.temp)
+        beta[, start:end] <- solve(gg, Gw)
+        w1.temp <- (w.temp - g %*% beta[, start:end])
+        Rw[start:end] <- colSums(uhat * w1.temp)/n
+        # Now the bootstrapped test in the chunk
+        if (cores == 1) {
+          boot.chunk <- lapply(1:nboot, bootapply, n, pkappa, k1, k2,
+                               uhat, w1.temp, Seed)
+        }
+        if (cores > 1) {
+          boot.chunk <- parallel::parLapply(cl, 1:nboot, bootapply, n,
+                                            pkappa, k1, k2, uhat, w1.temp, Seed)
+        }
+        # Put the Bootstrap resuls in a matrix
+        boot.chunk <- t(matrix(unlist(boot.chunk), 2, nboot))
+        # Compute the KSb and CvMb over chunks
+        if (1000 * (i - 1) + 1 <= n.unique) {
+          ksb1 <- pmax(ksb1, boot.chunk[, 1])
+          cvmb1 <- cvmb1 + boot.chunk[, 2]
+        }
+      }
     }
     #-----------------------------------------------------------------------------
     # close the clusters, if we used paralell
@@ -173,5 +305,6 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     pvcvmb <- sum((boottest[, 2] > cvmtest1))/nboot
     #---------------------------------------------------------------------
     # Return these variables
-    list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb)
+    list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb,
+         w = w)
 }
