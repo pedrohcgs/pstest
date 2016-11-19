@@ -3,7 +3,7 @@
 \docType{package}
 \name{pstest-package}
 \alias{pstest-package}
-\title{pstest: An R Package for assessing the goodness of fit of propensity score models.}
+\title{pstest: An R Package for assessing the goodness-of-fit of propensity score models.}
 \description{
 An R package for implementing all the tests proposed in Sant'Anna and
 Song (2016), 'Specification Tests for the Propensity Score', available at
