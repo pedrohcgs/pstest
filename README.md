@@ -22,6 +22,8 @@ This github website hosts the source code. To install the `pstest` package, you 
         library(devtools)
         install_github("pedrohcgs/pstest")
 
-A help file with examples will be made available in the near future. 
+## Authors 
 
 This package was written by Pedro H. C. Sant'Anna (Vanderbilt University), and Xiaojun Song (Peking University).
+
+In case you have question, please do not hesitate to contact us.
