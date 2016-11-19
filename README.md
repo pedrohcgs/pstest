@@ -8,7 +8,7 @@ In short, this package implement bootstrapped based Kolmogorov-Smirnov and Crame
 The tests are based on the integrated conditional moment approach, where the weight function used is based on an orthogonal projection onto the tangent space of nuisance parameters. As a result, the tests (a) enjoy improved power properties, (b) do not suffer from the "curse of dimensionality" when the vector of covariates is of high-dimensionality, (c) are fully data-driven, (d) do not require tuning parameters such as bandwidths, and (e) are able to detect a broad class of local alternatives converging to the null at the parametric rate. These appealing features highlight that the tests can be of great use in practice.
 
 As of now, the `pstest` function accommodates the following weight functions w:
-* `ind` - use the indicator weight function w(q,u)=1(q<=u).
+* `ind` - use the indicator weight function w(q,u)=1(q<=u). This is the default.
 * `exp` - use the exponential weight function w(q,u)=exp(qu).
 * `logistic` - use the logistic weight function w(q,u)=1/[1+exp(-qu)].
 * `sin` - use the sine weight function w(q,u)=sin(qu).
