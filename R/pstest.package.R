@@ -21,4 +21,4 @@
 #'
 #' A help file with examples will be made available in the near future.
 #'
-"_PACKAGE"
+NULL
