@@ -70,7 +70,7 @@ x3 <- rpois(100, 3)
 # generate treatment status score based on Probit Specification
 treat <- (x1 + x2 + x3 >= rnorm(100, 4, 5))
 # estimate correctly specified propensity score based on Probit
-pscore <- glm(treat ~ x1 + x2 + x3, family = binomial(link = "probit"),
+pscore <- stats::glm(treat ~ x1 + x2 + x3, family = binomial(link = "probit"),
               x = TRUE)
 # Test the correct specification of estimated propensity score, using
 # the weight function 'ind', and bootstrap based on 'Mammen'.
