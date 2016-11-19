@@ -13,6 +13,13 @@
 #'@param model  a description of the functional form (link function) used
 #'              to estimated propensity score. The alternatives are:
 #'              'logit' (default), and 'probit'.
+#'@param w a description of which weight function the projection is based on.
+#'            The alternatives are 'ind' (default), which set w(q,u)=1(q<=u),
+#'            'exp', which set w(q,u)=exp(qu), 'logistic', which set
+#'            w(q,u)=1/[1+exp(-qu)], 'sin', which set w(q,u)=sin(qu), and
+#'            'sincos', which set w(q,u)=sin(qu)+cos(qu)
+#'@param dist a description of which distribution to use during the bootstrap.
+#'            The alternatives are 'Mammen' (default), and 'Rademacher'.
 #'@param nboot number of bootstrap replicates to perform. Default is 1,000.
 #'@param cores number of cores to use during the bootstrap. Default is 1.
 #'              If cores is greater than 1, the bootstrap is conducted using
@@ -21,14 +28,7 @@
 #'              to splitthe original data into chunks, saving memory.
 #'              Default value is 1,000. If the \emph{pstest} function throw a
 #'              memory error, you should choose a smaller value for \emph{chunk}.
-#'@param dist a description of which distribution to use during the bootstrap.
-#'            The alternatives are 'Mammen' (default), and 'Rademacher'.
 #'
-#'@param w a description of which weight function the projection is baded on.
-#'            The alternatives are 'ind' (default), which stands for w(q,u)=1{q<=u},
-#'            'exp', which stands for w(q,u)=exp(qu), 'logistic', which stands for
-#'            w(q,u)=1/[1+exp(-qu)], 'sin', which stands for w(q,u)=sin(qu), and
-#'            'sincos', which stands for w(q,u)=sin(qu)+cos(qu)
 #'
 #'@return a list containing the Kolmogorov-Smirnov and Cramer-von Mises test
 #'        statistics for the null hypothesis of correctly specified propensity
@@ -42,9 +42,9 @@
 #'@importFrom harvestr gather
 #-------------------------------------------------------------------------------
 pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
-                  nboot = 1000, cores = 1, chunk = 1000,
+                  w = c("ind", "exp", "logistic", "sin", "sincos"),
                   dist = c("Mammen", "Rademacher"),
-                  w = c("ind", "exp", "logistic", "sin", "sincos")) {
+                  nboot = 1000, cores = 1, chunk = 1000) {
     #-----------------------------------------------------------------------------
     # Define some underlying variables
     n <- length(d)

@@ -4,9 +4,9 @@
 \alias{pstest}
 \title{pstest: Tests for the Propensity Score}
 \usage{
-pstest(d, pscore, xpscore, model = c("logit", "probit"), nboot = 1000,
-  cores = 1, chunk = 1000, dist = c("Mammen", "Rademacher"),
-  w = c("ind", "exp", "logistic", "sin", "sincos"))
+pstest(d, pscore, xpscore, model = c("logit", "probit"), w = c("ind", "exp",
+  "logistic", "sin", "sincos"), dist = c("Mammen", "Rademacher"),
+  nboot = 1000, cores = 1, chunk = 1000)
 }
 \arguments{
 \item{d}{a vector containing the binary treatment indicator.}
@@ -21,6 +21,15 @@ estimation. It should also include the constant term.}
 to estimated propensity score. The alternatives are:
 'logit' (default), and 'probit'.}
 
+\item{w}{a description of which weight function the projection is based on.
+The alternatives are 'ind' (default), which set w(q,u)=1(q<=u),
+'exp', which set w(q,u)=exp(qu), 'logistic', which set
+w(q,u)=1/[1+exp(-qu)], 'sin', which set w(q,u)=sin(qu), and
+'sincos', which set w(q,u)=sin(qu)+cos(qu)}
+
+\item{dist}{a description of which distribution to use during the bootstrap.
+The alternatives are 'Mammen' (default), and 'Rademacher'.}
+
 \item{nboot}{number of bootstrap replicates to perform. Default is 1,000.}
 
 \item{cores}{number of cores to use during the bootstrap. Default is 1.
@@ -31,15 +40,6 @@ parLapply, instead of lapply type call.}
 to splitthe original data into chunks, saving memory.
 Default value is 1,000. If the \emph{pstest} function throw a
 memory error, you should choose a smaller value for \emph{chunk}.}
-
-\item{dist}{a description of which distribution to use during the bootstrap.
-The alternatives are 'Mammen' (default), and 'Rademacher'.}
-
-\item{w}{a description of which weight function the projection is baded on.
-The alternatives are 'ind' (default), which stands for w(q,u)=1{q<=u},
-'exp', which stands for w(q,u)=exp(qu), 'logistic', which stands for
-w(q,u)=1/[1+exp(-qu)], 'sin', which stands for w(q,u)=sin(qu), and
-'sincos', which stands for w(q,u)=sin(qu)+cos(qu)}
 }
 \value{
 a list containing the Kolmogorov-Smirnov and Cramer-von Mises test
