@@ -19,3 +19,6 @@ License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1.9000
 Date: 2016-11-19 14:35
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
