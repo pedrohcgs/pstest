@@ -14,7 +14,7 @@ As of now, the `pstest` function accommodates weight functions w based on:
 * `sin` - the sine weight function w(q,u)=sin(qu).
 * `sincos` - the sine and cosine weight function w(q,u)=sin(qu)+cos(qu).
 
-For further details, please see the paper. In case you have doubts, don't hesitate to contact us.
+For further details, please see the paper.
 
 ## Installing pstest
 This github website hosts the source code. To install the `pstest` package, you simply need to run the following two lines of code in R:
@@ -26,4 +26,4 @@ This github website hosts the source code. To install the `pstest` package, you 
 
 This package was written by Pedro H. C. Sant'Anna (Vanderbilt University), and Xiaojun Song (Peking University).
 
-In case you have question, please do not hesitate to contact us.
+In case you have questions, please do not hesitate to contact us.
