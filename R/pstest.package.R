@@ -41,12 +41,6 @@
 #'being able to choose different \eqn{w(q,u)} gives us flexibility to direct power in desired
 #'directions.
 #'
-#' @section Authors:
-#'       The \emph{pstest} package was written by Pedro H. C. Sant'Anna (Vanderbilt University),
-#'       \email{pedro.h.santanna@@vanderbilt.edu}, and Xiaojun Song (Peking University),
-#'       \email{sxj@@gsm.pku.edu.cn}.
-#'
-#'       In case you have any question, please do not hesitate to contact us.
 #' @references
 #'       Sant'Anna, Pedro H. C, and Song, Xiaojun (2016), \emph{Specification Tests for the Propensity Score},
 #'       available at \url{http://sites.google.com/site/pedrohcsantanna/}.
