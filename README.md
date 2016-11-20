@@ -9,7 +9,7 @@ data-driven nonparametric diagnostic tools for detecting propensity score misspe
 
 This R package implements the class of specification test for the propensity score
 proposed in Sant'Anna and Song (2016), 'Specification Tests for the Propensity Score',
-available at Pedro H.C. Sant'Anna webpage, \url{http://sites.google.com/site/pedrohcsantanna/}.
+available at Pedro H.C. Sant'Anna webpage, http://sites.google.com/site/pedrohcsantanna/.
 
 In short, this package implements Kolmogorov-Smirnov and Cramer-von Mises type tests
 for parametric propensity score models with either logistic ('logit'), or
@@ -35,7 +35,7 @@ specification tests, depending on the chosen weight function w(q,u):
 
 Different weight functions w(q,u) have different power properties. Thus, being able to choose between different w(q,u) gives one the flexibility to direct power in alternative directions.
 
-For further details, please see the paper Sant'Anna and Song (2016), 'Specification Tests for the Propensity Score', available at Pedro H.C. Sant'Anna webpage, \url{http://sites.google.com/site/pedrohcsantanna/}.
+For further details, please see the paper Sant'Anna and Song (2016), 'Specification Tests for the Propensity Score', available at Pedro H.C. Sant'Anna webpage, http://sites.google.com/site/pedrohcsantanna/.
 
 ## Installing pstest
 This github website hosts the source code. To install the `pstest` package, you simply need to run the following two lines of code in R:
