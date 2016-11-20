@@ -7,6 +7,7 @@ it has to be estimated, implying that the reliability of many treatment effect e
 on the correct specification of the (parametric) propensity score. This package provides
 data-driven nonparametric diagnostic tools for detecting propensity score misspecification.
 
+## Details 
 This R package implements the class of specification test for the propensity score
 proposed in Sant'Anna and Song (2016), 'Specification Tests for the Propensity Score',
 available at Pedro H.C. Sant'Anna webpage, http://sites.google.com/site/pedrohcsantanna/.
