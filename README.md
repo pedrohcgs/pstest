@@ -46,8 +46,9 @@ This github website hosts the source code. To install the `pstest` package, you 
 
 ## Authors 
 
-* Pedro H. C. Sant'Anna, Vanderbilt University, pedro.h.santanna [at] vanderbilt [dot] edu;
-* Xiaojun Song, Peking University, sxj [at] gsm [dot] pku [dot] edu [dot cn.
+Pedro H. C. Sant'Anna, Vanderbilt University, Nashville, TN. E-mail: pedro.h.santanna [at] vanderbilt [dot] edu.
+
+Xiaojun Song, Peking University, Beijing, China. E-mail: sxj [at] gsm [dot] pku [dot] edu [dot] cn.
 
 In case you have questions, please do not hesitate to contact us.
 
