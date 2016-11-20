@@ -54,12 +54,6 @@ for the null hypothesis that a parametric model for the propensity score is
 is correctly specified. For details of the testing procedure, see
 Sant'Anna and Song (2016),'Specification Tests for the Propensity Score'.
 }
-\section{Authors}{
-
-      The \emph{pstest} package was written by Pedro H. C. Sant'Anna (Vanderbilt University),
-      \email{pedro.h.santanna@vanderbilt.edu}, and Xiaojun Song (Peking University),
-      \email{sxj@gsm.pku.edu.cn}.
-}
 \examples{
 # Example based on simulation data
 # Simulate vector of covariates

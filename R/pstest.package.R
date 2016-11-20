@@ -30,7 +30,7 @@
 #' It is worth stressing that this package implements in a unified manner a large class of
 #' specification tests, depending on the chosen weight function \eqn{w(q,u)}:
 #' \itemize{
-#' \item{'ind' - the indicator weight function \eqn{w(q,u)=1{q \le u}}. This is the default.}
+#' \item{'ind' - the indicator weight function \eqn{w(q,u)=1(q \le u)}. This is the default.}
 #' \item{'exp' - the exponential weight function \eqn{w(q,u)=exp(qu)}.}
 #' \item{'logistic' - the logistic weight function \eqn{w(q,u)=1/[1+exp(-qu)]}.}
 #' \item{'sin' - the sine weight function \eqn{w(q,u)=sin(qu)}.}

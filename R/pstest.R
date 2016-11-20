@@ -36,11 +36,6 @@
 #'        bootstrapped p-values, pvks and pvcvm, respectively. The weight function
 #'        which our projection is based on is also reported.
 #'
-#'@section Authors:
-#'       The \emph{pstest} package was written by Pedro H. C. Sant'Anna (Vanderbilt University),
-#'       \email{pedro.h.santanna@@vanderbilt.edu}, and Xiaojun Song (Peking University),
-#'       \email{sxj@@gsm.pku.edu.cn}.
-#'
 #'@references
 #'       Sant'Anna, Pedro H. C, and Song, Xiaojun (2016), \emph{Specification Tests for the Propensity Score},
 #'       available at \url{http://sites.google.com/site/pedrohcsantanna/}.
