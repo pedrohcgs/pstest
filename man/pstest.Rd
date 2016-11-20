@@ -22,10 +22,10 @@ to estimated propensity score. The alternatives are:
 'logit' (default), and 'probit'.}
 
 \item{w}{a description of which weight function the projection is based on.
-The alternatives are 'ind' (default), which set w(q,u)=1(q<=u),
-'exp', which set w(q,u)=exp(qu), 'logistic', which set
-w(q,u)=1/[1+exp(-qu)], 'sin', which set w(q,u)=sin(qu), and
-'sincos', which set w(q,u)=sin(qu)+cos(qu)}
+The alternatives are 'ind' (default), which set \eqn{w(q,u)=1(q<=u)},
+'exp', which set \eqn{w(q,u)=exp(qu)}, 'logistic', which set
+\eqn{w(q,u)=1/[1+exp(-qu)]}, 'sin', which set \eqn{w(q,u)=sin(qu)}, and
+'sincos', which set \eqn{w(q,u)=sin(qu)+cos(qu)}.}
 
 \item{dist}{a description of which distribution to use during the bootstrap.
 The alternatives are 'Mammen' (default), and 'Rademacher'.}
@@ -37,7 +37,7 @@ If cores is greater than 1, the bootstrap is conducted using
 parLapply, instead of lapply type call.}
 
 \item{chunk}{a value that determine the size of each 'tile'. Such argument is used
-to splitthe original data into chunks, saving memory.
+to split the original data into chunks, saving memory.
 Default value is 1,000. If the \emph{pstest} function throw a
 memory error, you should choose a smaller value for \emph{chunk}.}
 }
