@@ -10,7 +10,7 @@
 #'
 #'@details
 #' This R package implements the class of specification test for the propensity score
-#' proposed in Sant'Anna and Song (2016), 'Specification Tests for the Propensity Score',
+#' proposed in Sant'Anna and Song (2016), `Specification Tests for the Propensity Score',
 #' available at Pedro H.C. Sant'Anna webpage, \url{http://sites.google.com/site/pedrohcsantanna/}.
 #'
 #' In short, this package implements Kolmogorov-Smirnov and Cramer-von Mises type tests
@@ -30,11 +30,11 @@
 #' It is worth stressing that this package implements in a unified manner a large class of
 #' specification tests, depending on the chosen weight function \eqn{w(q,u)}:
 #' \itemize{
-#' \item{'ind' - the indicator weight function \eqn{w(q,u)=1(q \le u)}. This is the default.}
-#' \item{'exp' - the exponential weight function \eqn{w(q,u)=exp(qu)}.}
-#' \item{'logistic' - the logistic weight function \eqn{w(q,u)=1/[1+exp(-qu)]}.}
-#' \item{'sin' - the sine weight function \eqn{w(q,u)=sin(qu)}.}
-#' \item{'sincos' - the sine and cosine weight function \eqn{w(q,u)=sin(qu)+cos(qu)}.}
+#' \item{`ind' - the indicator weight function \eqn{w(q,u)=1(q \le u)}. This is the default.}
+#' \item{`exp' - the exponential weight function \eqn{w(q,u)=exp(qu)}.}
+#' \item{`logistic' - the logistic weight function \eqn{w(q,u)=1/[1+exp(-qu)]}.}
+#' \item{`sin' - the sine weight function \eqn{w(q,u)=sin(qu)}.}
+#' \item{`sincos' - the sine and cosine weight function \eqn{w(q,u)=sin(qu)+cos(qu)}.}
 #' }
 #'
 #'Different weight functions \eqn{w(q,u)} have different power properties, and therefore,
