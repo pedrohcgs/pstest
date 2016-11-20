@@ -5,7 +5,11 @@ Version: 0.1.1.901
 Author: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>, Xiajoun Song
     <sxj@gsm.pku.edu.cn>
 Maintainer: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>
-Description: Provide specification tests for parametric propensity score models.
+Description: The propensity score is one of the most widely used tools in studying the causal effect
+    of a treatment, intervention, or policy. Given that the propensity score is usually unknown,
+    it has to be estimated, implying that the reliability of many treatment effect estimators depends
+    on the correct specification of the (parametric) propensity score. This package provides
+    data-driven nonparametric diagnostic tools for detecting propensity score misspecification. 
     In short, this package implements all the tests proposed in Sant'Anna and Song
     (2016), "Specification Tests for the Propensity Score".
 URL: https://github.com/pedrohcgs/pstest
@@ -18,4 +22,4 @@ Imports:
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1.9000
-Date: 2016-11-19 14:35
+Date: 2016-11-19 19:35
