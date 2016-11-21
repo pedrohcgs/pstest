@@ -41,7 +41,7 @@ You can install the package from CRAN with `install.packages("pstest")`.
 Alternatively, you can install the most updated version of the `pstest` package from GitHub:
 
         devtools::install_github("pedrohcgs/pstest")
-For this, the package devtools is required.          
+For this, the package devtools is required (you can install it from CRAN with `install.packages("devtools")`)         
         
 ## Authors 
 
