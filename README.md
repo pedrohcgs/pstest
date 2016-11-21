@@ -28,6 +28,7 @@ in practice.
 
 It is worth stressing that this package implements in a unified manner a large class of
 specification tests, depending on the chosen weight function w(q,u):
+
 * `ind` - the indicator weight function w(q,u)=1(q<=u). This is the default.
 * `exp` - the exponential weight function w(q,u)=exp(qu).
 * `logistic` - the logistic weight function w(q,u)=1/[1+exp(-qu)].
