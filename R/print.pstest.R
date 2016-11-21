@@ -27,10 +27,11 @@ print.pstest <- function(x, ...){
     if(x$argu$w == "sin")       ww <- "Sine function, w(q,u) = sin(qu)"
     if(x$argu$w == "sincos")    ww <- "Sine and cosine function, w(q,u) = sin(qu)+ cos(qu)"
 
-    cat("Call:\n")
+    cat(" Sant'Anna and Song (2016) specification test for the propensity score.\n")
+    cat(" Call:\n")
     print(x$call)
-    cat("\n Sant'Anna and Song (2016) specification test for the propensity score.\n")
-    cat("Weight function used:", ww)
+    cat("\n Weight function:\n")
+    cat(ww)
     cat("\n Number of Boostrap draws:", x$argu$nboot)
 
     cat("\n Kolmogorov-Smirnov test:\n")
