@@ -27,15 +27,14 @@ print.pstest <- function(x, ...){
     colnames(body) <- header
     #-----------------------------------------------------------------------------
     #Output
-
     cat(" Call:\n")
-    print(x$call)
-
-    cat("\n Weight function:", "\t \t", ww, "\n")
-    cat(" Number of Boostrap draws:", "\t", x$argu$nboot, "\n")
-    cat("\n")
-
-    cat("\n Sant'Anna and Song (2016) specification test for the propensity score:\n")
-    cat("\n")
+    cat(" "); print(x$call)
+    cat("-------------------------------------------------------------------------")
+    cat("\n Sant'Anna and Song (2016) specification tests for the propensity score:\n")
     print.matrix1(rbind(header, body))
+    cat("-------------------------------------------------------------------------")
+    cat("\n Weight function:", "\t \t", ww)
+    cat("\n Number of Boostrap draws:", "\t", x$argu$nboot)
+    cat("\n Boostrap draws from", x$argu$dist, 'distribution')
+
 }
