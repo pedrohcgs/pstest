@@ -5,7 +5,6 @@
 #' @param x A pstest object
 #' @param ... Other params (required as generic function, but not used)
 #'
-#' @export
 # Define new print function
 print.pstest <- function(x, ...){
   cat("Call:\n")
