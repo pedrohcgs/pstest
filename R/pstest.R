@@ -330,12 +330,12 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     pvcvmb <- sum((boottest[, 2] > cvmtest1))/nboot
     #---------------------------------------------------------------------
     # record the call
-    call <- match.call()
+    call.param <- match.call()
     # Record all arguments used in the function
-    args <- mget(names(formals()),sys.frame(sys.nframe()))
+    argu <- mget(names(formals()),sys.frame(sys.nframe()))
     # Return these variables
     ret <- list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb,
-                call = call)
+                call.param = call.param, argu = argu)
     # Define a new class
     class(ret) <- "pstest"
     # return the list
