@@ -333,7 +333,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     call <- match.call()
     # Return these variables
     ret <- list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb,
-                w = w, call = call)
+                w = w)
     # Define a new class
     class(ret) <- "pstest"
     # return the list
