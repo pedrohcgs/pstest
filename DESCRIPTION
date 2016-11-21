@@ -2,7 +2,7 @@ Package: pstest
 Type: Package
 Title: Specification Tests for Parametric Propensity Score Models
 Version: 0.1.2.901
-Author: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>, Xiajoun Song
+Author: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>, Xiaojun Song
     <sxj@gsm.pku.edu.cn>
 Maintainer: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>
 Description: The propensity score is one of the most widely used tools in studying the causal effect
