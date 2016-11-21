@@ -40,13 +40,8 @@ You can install the package from CRAN with `install.packages("pstest")`.
 
 Alternatively, you can install the most updated version of the `pstest` package from GitHub:
 
-1. Make sure the package devtools is installed - you can install it from CRAN with `install.packages("devtools")`.
-2. Make sure you have a working development environment.
-  * Windows: Install [Rtools](http://cran.r-project.org/bin/windows/Rtools).
-  * Mac: Install Xcode from the Mac App Store.
-  * Linux: Install a compiler and various development libraries (details vary across different flavors of Linux).
-3. Install the development version of `pstest`.
         devtools::install_github("pedrohcgs/pstest")
+For this, the package devtools is required (you can install it from CRAN with `install.packages("devtools")`).      
         
 ## Authors 
 
