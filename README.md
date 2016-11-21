@@ -40,10 +40,19 @@ Different weight functions w(q,u) have different power properties. Thus, being a
 For further details, please see the paper Sant'Anna and Song (2016), 'Specification Tests for the Propensity Score', available at Pedro H.C. Sant'Anna webpage, http://sites.google.com/site/pedrohcsantanna/.
 
 ## Installing pstest
-This github website hosts the source code. To install the `pstest` package, you simply need to run the following two lines of code in R:
+This github website hosts the source code. The difference between what is here what is in CRAN is that here we always have the most updated version of the package.
 
-        library(devtools)
-        install_github("pedrohcgs/pstest")
+To install the `pstest` package, you have two options: (a) install the CRAN version, or (b) instal the GitHub (most updated) version. Both procedures are very easy!
+
+To install the CRAN version, just use the `install.packages()` function:
+
+        install.packages("pstest")
+
+To install the most updated version of the `pstest` package, you simply need to run the following line of code in R:
+
+        devtools::install_github("pedrohcgs/pstest")
+        
+As you can see, both procedures are extremely easy!
 
 ## Authors 
 
