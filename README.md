@@ -36,9 +36,7 @@ This github website hosts the source code. The difference between what is here w
 
 To install the `pstest` package, you have two options: (a) install the CRAN version, or (b) instal the GitHub (most updated) version. Both procedures are very easy!
 
-You can install the package from CRAN as follows:
-
-        install.packages("pstest")
+You can install the package from CRAN with `install.packages("pstest")`. 
 
 Alternatively, you can install the most updated version of the `pstest` package from GitHub:
 
