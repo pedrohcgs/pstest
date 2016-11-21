@@ -333,6 +333,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     call.param <- match.call()
     # Record all arguments used in the function
     argu <- mget(names(formals()),sys.frame(sys.nframe()))
+    argu <- list(model = argu$model, w = argu$w, dist = argu$dist, nboot = argu$nboot )
     # Return these variables
     ret <- list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb,
                 call.param = call.param, argu = argu)
