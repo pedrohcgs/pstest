@@ -332,10 +332,10 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     # record the call
     call <- match.call()
     # Record all arguments used in the function
-    args <- formals()
+    args <- mget(names(formals()),sys.frame(sys.nframe()))
     # Return these variables
     ret <- list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb,
-                call = call, args = args )
+                call = call)
     # Define a new class
     class(ret) <- "pstest"
     # return the list
