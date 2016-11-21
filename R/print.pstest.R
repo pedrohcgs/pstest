@@ -38,7 +38,7 @@ print.pstest <- function(x, ...){
     header <- c("", "Test statistic", "Bootstrapped P-value")
     body <- cbind(c("Kolmogorov-Smirnov", "Cramer-von Mises"),
                   c(x$kstest, x$cvmtest), c(x$pvks, x$pvcvm))
-    body <- round(body, digits=4)
+    body[2:3] <- round(body[2:3], digits=4)
     colnames(body) <- header
     print.matrix1(rbind(header, body))
 
