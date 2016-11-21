@@ -37,6 +37,6 @@ print.pstest <- function(x, ...){
     cat(" -------------------------------------------------------------------------")
     cat("\n Weight function:", "\t \t", ww)
     cat("\n Number of boostrap draws:", "\t", x$argu$nboot)
-    cat("\n Boostrap draws from", x$argu$dist, 'distribution')
+    cat("\n Boostrap draws from", distt, 'distribution')
 
 }
