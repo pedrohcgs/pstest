@@ -38,7 +38,6 @@ print.pstest <- function(x, ...){
     header <- c("", "Test statistic", "Bootstrapped P-value")
     body <- cbind(c("Kolmogorov-Smirnov", "Cramer-von Mises"),
                   c(x$kstest, x$cvmtest), c(x$pvks, x$pvcvm))
-    body[2:3] <- round(body[2:3], digits=4)
     colnames(body) <- header
     print.matrix1(rbind(header, body))
 
@@ -57,8 +56,10 @@ print.pstest <- function(x, ...){
 #' @param m Some matrix
 #'
 #' @noRd
+#'@importFrom utils write.table
+#'
 print.matrix1 <- function(m){
-  write.table(format(m, justify="right", digits=2, nsmall=2),
+  utils::write.table(format(m, justify="right", digits=2, nsmall=2),
               row.names=F, col.names=F, quote=F, sep="\t")
   ##print(m, print.gap=3, right=T)
 }
