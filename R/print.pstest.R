@@ -31,11 +31,11 @@ print.pstest <- function(x, ...){
     cat(" Call:\n")
     print(x$call)
 
-    cat("\n Sant'Anna and Song (2016) specification test for the propensity score.\n")
+    cat("\n Weight function:", "\t \t", ww, "\n")
+    cat(" Number of Boostrap draws:", "\t", x$argu$nboot, "\n")
+    cat("\n")
 
-    cat("\n Weight function:", ww, "\n")
-    cat("Number of Boostrap draws:", x$argu$nboot, "\n")
-    cat("\n \n")
-
+    cat("\n Sant'Anna and Song (2016) specification test for the propensity score:\n")
+    cat("\n")
     print.matrix1(rbind(header, body))
 }
