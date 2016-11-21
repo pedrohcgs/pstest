@@ -18,6 +18,9 @@ print.pstest <- function(x, ...){
     if(x$argu$w == "sin")       ww <- "Sine function: w(q,u) = sin(qu)"
     if(x$argu$w == "sincos")    ww <- "Sine and cosine function: w(q,u) = sin(qu)+ cos(qu)"
 
+    distt <- x$argu$dist
+    if(distt == "Mammen") distt <- "Mammen's"
+
     #Creat parameters for the Table
     header <- c("", "Test statistic", "Bootstrapped P-value")
     body <- cbind(c("Kolmogorov-Smirnov", "Cramer-von Mises"),
