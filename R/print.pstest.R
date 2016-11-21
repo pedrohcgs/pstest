@@ -5,6 +5,8 @@
 #' @param x A pstest object
 #' @param ... Other params (required as generic function, but not used)
 #'
+#' @export
+#' @noRd
 # Define new print function
 print.pstest <- function(x, ...){
     #-----------------------------------------------------------------------------
