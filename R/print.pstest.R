@@ -1,6 +1,6 @@
 #' @title Print
 #'
-#' @description Prints a Summary pstest Object
+#' @description Prints a pstest Object
 #'
 #' @param x A pstest object
 #' @param ... Other params (required as generic function, but not used)

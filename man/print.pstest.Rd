@@ -12,6 +12,6 @@
 \item{...}{Other params (required as generic function, but not used)}
 }
 \description{
-Prints a Summary pstest Object
+Prints a pstest Object
 }
 
