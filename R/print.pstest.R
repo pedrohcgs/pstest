@@ -27,15 +27,38 @@ print.pstest <- function(x, ...){
     if(x$argu$w == "sin")       ww <- "Sine function, w(q,u) = sin(qu)"
     if(x$argu$w == "sincos")    ww <- "Sine and cosine function, w(q,u) = sin(qu)+ cos(qu)"
 
-    cat(" Sant'Anna and Song (2016) specification test for the propensity score.\n")
-    cat("\n Call:\n")
+    cat(" Call:\n")
     print(x$call)
+
+    cat("\n Sant'Anna and Song (2016) specification test for the propensity score.\n")
+
     cat("\n Weight function:", ww, "\n")
-    cat("\n Number of Boostrap draws:", x$argu$nboot)
+    cat("\n Number of Boostrap draws:", x$argu$nboot, "\n")
 
-    cat("\n Kolmogorov-Smirnov test:\n")
-    print(ks.mat)
+    header <- c("", "Test statistic", "Bootstrapped P-value")
+    body <- cbind(c("Kolmogorov-Smirnov", "Cramer-von Mises"),
+                  c(x$kstest, x$cvmtest), c(x$pvks, x$pvcvm))
+    body <- round(body, digits=4)
+    colnames(body) <- header
+    print.matrix1(rbind(header, body))
 
-    cat("\n Cramer-von Mises test:\n")
-    print(cvm.mat)
+    #cat("\n Kolmogorov-Smirnov test:\n")
+    #print(ks.mat)
+
+    #cat("\n Cramer-von Mises test:\n")
+    #print(cvm.mat)
+}
+
+
+#' @title print.matrix1
+#'
+#' @description Helper function to print a matrix; used by the print methods
+#'
+#' @param m Some matrix
+#'
+#' @noRd
+print.matrix1 <- function(m){
+  write.table(format(m, justify="right", digits=2, nsmall=2),
+              row.names=F, col.names=F, quote=F, sep="\t")
+  ##print(m, print.gap=3, right=T)
 }
