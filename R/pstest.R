@@ -330,7 +330,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     pvcvmb <- sum((boottest[, 2] > cvmtest1))/nboot
     #---------------------------------------------------------------------
     # record the call
-    call <- match.call(expand.dots = FALSE)
+    call <- match.call()
     # Return these variables
     ret <- list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb,
                 w = w, call = call)
@@ -338,23 +338,4 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     class(ret) <- "pstest"
     # return the list
     ret
-}
-
-# Define new print function
-print.pstest <- function(x, ...){
-  cat("Call:\n")
-  print(x$call)
-  ks.mat <- data.frame(x$kstest, x$pvks)
-  colnames(ks.mat) <- c("Test statistic", "Bootstrapped P-value")
-  rownames(ks.mat) <- c("")
-
-  cvm.mat <- data.frame(x$cvmtest, x$pvcvm)
-  colnames(cvm.mat) <- c("Test statistic", "Bootstrapped P-value")
-  rownames(cvm.mat) <- c("")
-
-  cat("\n Kolmogorov-Smirnov test:\n")
-  print(ks.mat)
-
-  cat("\n Cramer-von Mises test:\n")
-  print(cvm.mat)
 }
