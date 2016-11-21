@@ -45,8 +45,8 @@ memory error, you should choose a smaller value for \emph{chunk}.}
 a list containing the Kolmogorov-Smirnov and Cramer-von Mises test
        statistics for the null hypothesis of correctly specified propensity
        score model (kstest and cvmtest, respectively), and their associate
-       bootstrapped p-values, pvks and pvcvm, respectively. The weight function
-       which our projection is based on is also reported.
+       bootstrapped p-values, pvks and pvcvm, respectively. All inputs are also
+       returned
 }
 \description{
 \emph{pstest} computes Kolmogorov-Smirnov and Cramer-von Mises type tests
