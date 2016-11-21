@@ -339,7 +339,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     # Define a new class
     class(ret) <- "pstest"
     # return the list
-    ret
+    return(ret)
 }
 
 # Define new print function
