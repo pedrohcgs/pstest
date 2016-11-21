@@ -330,7 +330,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     pvcvmb <- sum((boottest[, 2] > cvmtest1))/nboot
     #---------------------------------------------------------------------
     # record the call
-    call <- formals()
+    call <- match.call(expand.dots = FALSE)
     # Return these variables
     ret <- list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb,
                 w = w, call = call)
