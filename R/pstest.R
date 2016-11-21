@@ -331,11 +331,32 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     #---------------------------------------------------------------------
     # record the call
     call <- match.call()
+    # Record all arguments used in the function
+    args <- formals()
     # Return these variables
     ret <- list(kstest = kstest1, cvmtest = cvmtest1, pvks = pvksb, pvcvm = pvcvmb,
-                w = w)
+                call = call, args = args )
     # Define a new class
     class(ret) <- "pstest"
     # return the list
     ret
+}
+
+# Define new print function
+print.pstest <- function(x, ...){
+  cat("Call:\n")
+  print(x$call)
+  ks.mat <- data.frame(x$kstest, x$pvks)
+  colnames(ks.mat) <- c("Test statistic", "Bootstrapped P-value")
+  rownames(ks.mat) <- c("")
+
+  cvm.mat <- data.frame(x$cvmtest, x$pvcvm)
+  colnames(cvm.mat) <- c("Test statistic", "Bootstrapped P-value")
+  rownames(cvm.mat) <- c("")
+
+  cat("\n Kolmogorov-Smirnov test:\n")
+  print(ks.mat)
+
+  cat("\n Cramer-von Mises test:\n")
+  print(cvm.mat)
 }
