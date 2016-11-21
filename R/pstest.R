@@ -34,7 +34,7 @@
 #'        statistics for the null hypothesis of correctly specified propensity
 #'        score model (kstest and cvmtest, respectively), and their associate
 #'        bootstrapped p-values, pvks and pvcvm, respectively. All inputs are also
-#'        returned
+#'        returned.
 #'
 #'@references
 #'       Sant'Anna, Pedro H. C, and Song, Xiaojun (2016), \emph{Specification Tests for the Propensity Score},

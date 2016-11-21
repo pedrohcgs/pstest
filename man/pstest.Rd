@@ -46,7 +46,7 @@ a list containing the Kolmogorov-Smirnov and Cramer-von Mises test
        statistics for the null hypothesis of correctly specified propensity
        score model (kstest and cvmtest, respectively), and their associate
        bootstrapped p-values, pvks and pvcvm, respectively. All inputs are also
-       returned
+       returned.
 }
 \description{
 \emph{pstest} computes Kolmogorov-Smirnov and Cramer-von Mises type tests
