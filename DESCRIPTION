@@ -1,7 +1,7 @@
 Package: pstest
 Type: Package
 Title: Specification Tests for Parametric Propensity Score Models
-Version: 0.1.2.902
+Version: 0.1.2.903
 Author: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>, Xiaojun Song
     <sxj@gsm.pku.edu.cn>
 Maintainer: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>
