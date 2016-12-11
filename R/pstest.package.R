@@ -32,7 +32,7 @@
 #' \itemize{
 #' \item{`ind' - the indicator weight function \eqn{w(q,u)=1(q \le u)}. This is the default.}
 #' \item{`exp' - the exponential weight function \eqn{w(q,u)=exp(qu)}.}
-#' \item{`logistic' - the logistic weight function \eqn{w(q,u)=1/[1+exp(-qu)]}.}
+#' \item{`logistic' - the logistic weight function \eqn{w(q,u)=1/[1+exp(1-qu)]}.}
 #' \item{`sin' - the sine weight function \eqn{w(q,u)=sin(qu)}.}
 #' \item{`sincos' - the sine and cosine weight function \eqn{w(q,u)=sin(qu)+cos(qu)}.}
 #' }

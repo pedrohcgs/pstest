@@ -5,11 +5,13 @@ Version: 0.1.2.902
 Author: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>, Xiaojun Song
     <sxj@gsm.pku.edu.cn>
 Maintainer: Pedro H. C. Sant'Anna <pedro.h.santanna@vanderbilt.edu>
-Description: The propensity score is one of the most widely used tools in studying the causal effect
-    of a treatment, intervention, or policy. Given that the propensity score is usually unknown,
-    it has to be estimated, implying that the reliability of many treatment effect estimators depends
-    on the correct specification of the (parametric) propensity score. This package provides
-    data-driven nonparametric diagnostic tools for detecting propensity score misspecification.
+Description: The propensity score is one of the most widely used tools in
+    studying the causal effect of a treatment, intervention, or policy. Given that
+    the propensity score is usually unknown, it has to be estimated, implying that
+    the reliability of many treatment effect estimators depends on the correct
+    specification of the (parametric) propensity score. This package provides
+    data-driven nonparametric diagnostic tools for detecting propensity score
+    misspecification.
 URL: https://github.com/pedrohcgs/pstest
 Depends:
     R (>= 3.1)
@@ -20,5 +22,5 @@ Imports:
     utils
 License: GPL-2
 LazyData: TRUE
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 5.0.1
 Date: 2016-11-19 19:35

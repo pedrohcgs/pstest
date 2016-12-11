@@ -24,7 +24,7 @@ to estimated propensity score. The alternatives are:
 \item{w}{a description of which weight function the projection is based on.
 The alternatives are 'ind' (default), which set \eqn{w(q,u)=1(q<=u)},
 'exp', which set \eqn{w(q,u)=exp(qu)}, 'logistic', which set
-\eqn{w(q,u)=1/[1+exp(-qu)]}, 'sin', which set \eqn{w(q,u)=sin(qu)}, and
+\eqn{w(q,u)=1/[1+exp(1-qu)]}, 'sin', which set \eqn{w(q,u)=sin(qu)}, and
 'sincos', which set \eqn{w(q,u)=sin(qu)+cos(qu)}.}
 
 \item{dist}{a description of which distribution to use during the bootstrap.

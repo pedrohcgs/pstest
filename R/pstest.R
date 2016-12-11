@@ -16,7 +16,7 @@
 #'@param w a description of which weight function the projection is based on.
 #'            The alternatives are 'ind' (default), which set \eqn{w(q,u)=1(q<=u)},
 #'            'exp', which set \eqn{w(q,u)=exp(qu)}, 'logistic', which set
-#'            \eqn{w(q,u)=1/[1+exp(-qu)]}, 'sin', which set \eqn{w(q,u)=sin(qu)}, and
+#'            \eqn{w(q,u)=1/[1+exp(1-qu)]}, 'sin', which set \eqn{w(q,u)=sin(qu)}, and
 #'            'sincos', which set \eqn{w(q,u)=sin(qu)+cos(qu)}.
 #'@param dist a description of which distribution to use during the bootstrap.
 #'            The alternatives are 'Mammen' (default), and 'Rademacher'.
@@ -224,7 +224,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         start <- min(chunk * (i - 1) + 1, n.unique)
         end <- min(chunk * i, n.unique)
         w.temp <- tcrossprod(pscore.fit, un.pscores[start:end])
-        w.temp <- 1/(1+exp(w.temp))
+        w.temp <- 1/(1+exp(1-w.temp))
         Gw <- crossprod(g, w.temp)
         beta[, start:end] <- solve(gg, Gw)
         w1.temp <- (w.temp - g %*% beta[, start:end])
