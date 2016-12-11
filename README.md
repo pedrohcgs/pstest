@@ -23,7 +23,7 @@ It is worth stressing that the `pstest` package implements in a unified manner a
 
 * `ind` - the indicator weight function w(q,u)=1(q<=u). This is the default.
 * `exp` - the exponential weight function w(q,u)=exp(qu).
-* `logistic` - the logistic weight function w(q,u)=1/[1+exp(-qu)].
+* `logistic` - the logistic weight function w(q,u)=1/[1+exp(1-qu)].
 * `sin` - the sine weight function w(q,u)=sin(qu).
 * `sincos` - the sine and cosine weight function w(q,u)=sin(qu)+cos(qu).
 
