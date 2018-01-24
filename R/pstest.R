@@ -64,7 +64,7 @@
 #'
 #'@importFrom stats binomial rbinom runif glm
 #'@importFrom parallel makeCluster parLapply stopCluster
-#'@importFrom harvestr gather
+#'@importFrom harvestr gather MASS
 #-------------------------------------------------------------------------------
 pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
                   w = c("ind", "exp", "logistic", "sin", "sincos"),
