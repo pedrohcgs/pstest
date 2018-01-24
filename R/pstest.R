@@ -166,7 +166,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
           end <- min(chunk * i, n.unique)
           w.temp <- outer(pscore.fit, un.pscores[start:end], "<=")
           Gw <- crossprod(g, w.temp)
-          beta[, start:end] <- solve(gg, Gw)
+          beta[, start:end] <- MASS::ginv(gg, Gw)
           w1.temp <- (w.temp - g %*% beta[, start:end])
           Rw[start:end] <- colSums(uhat * w1.temp)/n
           # Now the bootstrapped test in the chunk
@@ -196,7 +196,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         w.temp <- tcrossprod(pscore.fit, un.pscores[start:end])
         w.temp <- exp(w.temp)
         Gw <- crossprod(g, w.temp)
-        beta[, start:end] <- solve(gg, Gw)
+        beta[, start:end] <- MASS::ginv(gg, Gw)
         w1.temp <- (w.temp - g %*% beta[, start:end])
         Rw[start:end] <- colSums(uhat * w1.temp)/n
         # Now the bootstrapped test in the chunk
@@ -226,7 +226,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         w.temp <- tcrossprod(pscore.fit, un.pscores[start:end])
         w.temp <- 1/(1+exp(1-w.temp))
         Gw <- crossprod(g, w.temp)
-        beta[, start:end] <- solve(gg, Gw)
+        beta[, start:end] <- MASS::ginv(gg, Gw)
         w1.temp <- (w.temp - g %*% beta[, start:end])
         Rw[start:end] <- colSums(uhat * w1.temp)/n
         # Now the bootstrapped test in the chunk
@@ -256,7 +256,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         w.temp <- tcrossprod(pscore.fit, un.pscores[start:end])
         w.temp <- sin(w.temp)
         Gw <- crossprod(g, w.temp)
-        beta[, start:end] <- solve(gg, Gw)
+        beta[, start:end] <- MASS::ginv(gg, Gw)
         w1.temp <- (w.temp - g %*% beta[, start:end])
         Rw[start:end] <- colSums(uhat * w1.temp)/n
         # Now the bootstrapped test in the chunk
@@ -286,7 +286,7 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         w.temp <- tcrossprod(pscore.fit, un.pscores[start:end])
         w.temp <- sin(w.temp)+cos(w.temp)
         Gw <- crossprod(g, w.temp)
-        beta[, start:end] <- solve(gg, Gw)
+        beta[, start:end] <- MASS::ginv(gg, Gw)
         w1.temp <- (w.temp - g %*% beta[, start:end])
         Rw[start:end] <- colSums(uhat * w1.temp)/n
         # Now the bootstrapped test in the chunk
