@@ -92,8 +92,9 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
     # Number of covariates
     k.dim = dim(xx)[2]
 
-    # unique pscores
-    un.pscores <- unique(pscore.fit)
+    # unique pscores (Check this later as if we consider unique pscre, need to multiply by frequency in the w, too)
+    un.pscores <- (pscore.fit)
+    #un.pscores <- unique(pscore.fit)
     n.unique <- length(un.pscores)
 
     # Initialize `beta` matrix (K coefficients for each of n.unique responses)
