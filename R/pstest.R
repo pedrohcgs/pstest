@@ -64,9 +64,10 @@
 #'
 #'@importFrom stats binomial rbinom runif glm
 #'@importFrom parallel makeCluster parLapply stopCluster
-#'@importFrom harvestr gather
+#'@importFrom harvestr gather glmx hetglm.fit
 #-------------------------------------------------------------------------------
-pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
+pstest = function(d, pscore, xpscore, pscore.model = NULL,
+                  model = c("logit", "probit", "het.probit"),
                   w = c("ind", "exp", "logistic", "sin", "sincos"),
                   dist = c("Mammen", "Rademacher"),
                   nboot = 1000, cores = 1, chunk = 1000) {
@@ -86,15 +87,40 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
         g <- stats::dnorm(beta.x) * xx
         rm(beta.x)
     }
+    if (model == "het.probit") {
+      if(is.null(pscore.model)){
+        stop(" You must provide the entire hetglm model if you are using het. probit")
+      }
+      if(!class(pscore.model)=="hetglm"){
+        stop(" pscore.model must be estimated using the hetglm function. See glmx package")
+      }
+      if(is.null(pscore.model$x$scale)){
+        stop(" You must include the option x=T in your glmx model")
+      }
+
+      pp <- pscore.model
+      index.mean <- as.numeric(pp$x$mean %*% pp$coefficients$mean)
+      index.scale <- as.numeric(pp$x$scale %*% (pp$coefficients$scale))
+
+      #beta.x <- stats::qnorm(pscore.fit)
+      index <- index.mean * exp(-index.scale)
+      g <- cbind(stats::dnorm(index) * exp(-index.scale) *pp$x$mean,
+                 - stats::dnorm(index)*index.mean*exp(-index.scale)*pp$x$scale)
+
+
+      xx <- as.matrix(cbind(pp$x$mean,pp$x$scale))
+      #rm(pp,xx.scale,index.mean,index.scale,index )
+    }
+
     gg <- crossprod(g)
     #-----------------------------------------------------------------------------
     # Define variables to be used in the loop
     # Number of covariates
     k.dim = dim(xx)[2]
 
-    # unique pscores (Check this later as if we consider unique pscre, need to multiply by frequency in the w, too)
-    un.pscores <- (pscore.fit)
+    # unique pscores
     #un.pscores <- unique(pscore.fit)
+    un.pscores <- (pscore.fit)
     n.unique <- length(un.pscores)
 
     # Initialize `beta` matrix (K coefficients for each of n.unique responses)
@@ -167,7 +193,8 @@ pstest = function(d, pscore, xpscore, model = c("logit", "probit"),
           end <- min(chunk * i, n.unique)
           w.temp <- outer(pscore.fit, un.pscores[start:end], "<=")
           Gw <- crossprod(g, w.temp)
-          beta[, start:end] <- solve(gg, Gw)
+          beta[, start:end] <- MASS::ginv(g) %*% Gw
+          #beta[, start:end] <- solve(gg, Gw)
           w1.temp <- (w.temp - g %*% beta[, start:end])
           Rw[start:end] <- colSums(uhat * w1.temp)/n
           # Now the bootstrapped test in the chunk
