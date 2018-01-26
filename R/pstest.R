@@ -64,7 +64,7 @@
 #'
 #'@importFrom stats binomial rbinom runif glm
 #'@importFrom parallel makeCluster parLapply stopCluster
-#'@importFrom harvestr gather glmx hetglm.fit
+#'@importFrom harvestr gather glmx hetglm.fit MASS ginv
 #-------------------------------------------------------------------------------
 pstest = function(d, pscore, xpscore, pscore.model = NULL,
                   model = c("logit", "probit", "het.probit"),
