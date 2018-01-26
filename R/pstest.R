@@ -193,7 +193,8 @@ pstest = function(d, pscore, xpscore, pscore.model = NULL,
           end <- min(chunk * i, n.unique)
           w.temp <- outer(pscore.fit, un.pscores[start:end], "<=")
           Gw <- crossprod(g, w.temp)
-          beta[, start:end] <- MASS::ginv(g) %*% Gw
+          
+          beta[, start:end] <- MASS::ginv(crossprod(g)) %*% Gw
           #beta[, start:end] <- solve(gg, Gw)
           w1.temp <- (w.temp - g %*% beta[, start:end])
           Rw[start:end] <- colSums(uhat * w1.temp)/n
