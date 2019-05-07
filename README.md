@@ -8,7 +8,7 @@ on the correct specification of the (parametric) propensity score. This package 
 data-driven nonparametric diagnostic tools for detecting propensity score misspecification.
 
 In short, this package implements the class of specification test for the propensity score
-proposed in Sant'Anna and Song (2016), [Specification Tests for the Propensity Score](https://papers.ssrn.com/abstract=2872084). The package accommodates Logit and Probit propensity score specifications. Critical values are computed with the assistance of a multiplier bootstrap.
+proposed in Sant'Anna and Song (2019), [Specification Tests for the Propensity Score](https://www.sciencedirect.com/science/article/pii/S0304407619300272). The package accommodates Logit and Probit propensity score specifications. Critical values are computed with the assistance of a multiplier bootstrap.
 
 The tests are based on the integrated conditional moment approach, where the weight function
 used is based on an orthogonal projection onto the tangent space of nuisance parameters.
@@ -29,12 +29,12 @@ It is worth stressing that the `pstest` package implements in a unified manner a
 
 Different weight functions w(q,u) have different power properties. Thus, being able to choose between different w(q,u) gives one the flexibility to direct power in alternative directions.
 
-For further details, please see the paper Sant'Anna and Song (2016), [Specification Tests for the Propensity Score](https://papers.ssrn.com/abstract=2872084).
+For further details, please see the paper Sant'Anna and Song (2019), [Specification Tests for the Propensity Score](https://www.sciencedirect.com/science/article/pii/S0304407619300272), or the [working paper version](https://papers.ssrn.com/abstract=2872084).
 
 ## Installing pstest
 This github website hosts the source code. The difference between what is here what is in CRAN is that here we always have the most updated version of the package.
 
-To install the `pstest` package, you have two options: (a) install the CRAN version, or (b) instal the GitHub (most updated) version. 
+To install the `pstest` package, you have two options: (a) install the CRAN version, or (b) instal the GitHub (most updated - RECOMMENDED) version. 
 
 You can install the package from CRAN with `install.packages("pstest")`. 
 
