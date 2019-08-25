@@ -9,9 +9,9 @@ Description: The propensity score is one of the most widely used tools in
     studying the causal effect of a treatment, intervention, or policy. Given that
     the propensity score is usually unknown, it has to be estimated, implying that
     the reliability of many treatment effect estimators depends on the correct
-    specification of the (parametric) propensity score. This package provides
+    specification of the (parametric) propensity score. This package implements the
     data-driven nonparametric diagnostic tools for detecting propensity score
-    misspecification.
+    misspecification proposed by Sant'Anna and Song (2019) <doi:10.1016/j.jeconom.2019.02.002>.
 URL: https://github.com/pedrohcgs/pstest
 Depends:
     R (>= 3.1)
@@ -25,4 +25,4 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 6.1.1.9000
-Date: 2019-08-24 22:25
+Date: 2019-08-25 10:45

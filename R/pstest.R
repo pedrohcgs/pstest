@@ -43,7 +43,6 @@
 #'       Journal of Econometrics, vol. 210 (2), p. 379-404.
 #'
 #'@examples
-#'\dontrun{
 #' # Example based on simulation data
 #' # Simulate vector of covariates
 #' set.seed(1234)
@@ -62,7 +61,7 @@
 #' # Alternatively, one can use the 'sin' weight function
 #' pstest(d = pscore$y, pscore = pscore$fit, xpscore = pscore$x,
 #'        model = "probit", w = "sin", dist = "Mammen")
-#'}
+#'
 #'@export
 #'
 #'@importFrom stats binomial rbinom runif glm
