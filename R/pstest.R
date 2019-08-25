@@ -12,7 +12,9 @@
 #'               estimation. It should also include the constant term.
 #'@param model  a description of the functional form (link function) used
 #'              to estimated propensity score. The alternatives are:
-#'              'logit' (default), and 'probit'.
+#'              'logit' (default), 'probit', and het.probit
+#' @param pscore.model in case you you set model="het.probit", pscore.model is the entire hetglm object.
+#'                      Default for pscore.model is NULL.
 #'@param w a description of which weight function the projection is based on.
 #'            The alternatives are 'ind' (default), which set \eqn{w(q,u)=1(q<=u)},
 #'            'exp', which set \eqn{w(q,u)=exp(qu)}, 'logistic', which set
@@ -64,7 +66,6 @@
 #'
 #'@importFrom stats binomial rbinom runif glm
 #'@importFrom parallel makeCluster parLapply stopCluster nextRNGStream
-#'@importFrom harvestr gather
 #'@importFrom glmx hetglm.fit
 #'@importFrom MASS ginv
 #-------------------------------------------------------------------------------
@@ -82,13 +83,13 @@ pstest = function(d, pscore, xpscore, pscore.model = NULL,
     #-----------------------------------------------------------------------------
     # Run some tests
     if( !is.element(model,c("logit", "probit", "het.probit"))) {
-      stop("model must be either "logit", "probit" or "het.probit" ")
+      stop("model must be either 'logit', 'probit' or 'het.probit' ")
     }
     if( !is.element(dist,c("Mammen", "Rademacher"))) {
-      stop("dist must be either "Mammen", or "Rademacher" ")
+      stop("dist must be either 'Mammen', or 'Rademacher' ")
     }
     if( !is.element(w,c("ind", "exp", "logistic", "sin", "sincos"))) {
-      stop("w must be either "ind", "exp", "logistic", "sin", or "sincos" ")
+      stop("w must be either 'ind', 'exp', 'logistic', 'sin', or 'sincos' ")
     }
     #-----------------------------------------------------------------------------
     # #Define the score variables for the projection
@@ -185,7 +186,7 @@ pstest = function(d, pscore, xpscore, pscore.model = NULL,
     #-----------------------------------------------------------------------------
     # Define seeds: Guarantee reproducibility
     ss <- floor(stats::runif(1) * 10000)
-    seed.temp <- harvestr::gather(nboot, seed = ss)
+    seed.temp <- gather.ps(nboot, seed = ss)
 
     Seed <- matrix(nrow = nboot, ncol = 6)
     for (i in 1:nboot) {
@@ -206,7 +207,7 @@ pstest = function(d, pscore, xpscore, pscore.model = NULL,
           end <- min(chunk * i, n.unique)
           w.temp <- outer(pscore.fit, un.pscores[start:end], "<=")
           Gw <- crossprod(g, w.temp)
-          
+
           beta[, start:end] <- MASS::ginv(crossprod(g)) %*% Gw
           #beta[, start:end] <- solve(gg, Gw)
           w1.temp <- (w.temp - g %*% beta[, start:end])

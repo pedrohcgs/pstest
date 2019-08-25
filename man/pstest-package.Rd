@@ -48,4 +48,3 @@ directions.
 Sant'Anna, Pedro H. C, and Song, Xiaojun (2016), \emph{Specification Tests for the Propensity Score},
       available at \url{http://sites.google.com/site/pedrohcsantanna/}.
 }
-

@@ -4,9 +4,9 @@
 \alias{pstest}
 \title{pstest: Tests for the Propensity Score}
 \usage{
-pstest(d, pscore, xpscore, model = c("logit", "probit"), w = c("ind", "exp",
-  "logistic", "sin", "sincos"), dist = c("Mammen", "Rademacher"),
-  nboot = 1000, cores = 1, chunk = 1000)
+pstest(d, pscore, xpscore, pscore.model = NULL, model = "logit",
+  w = "ind", dist = "Mammen", nboot = 1000, cores = 1,
+  chunk = 1000)
 }
 \arguments{
 \item{d}{a vector containing the binary treatment indicator.}
@@ -17,9 +17,12 @@ pstest(d, pscore, xpscore, model = c("logit", "probit"), w = c("ind", "exp",
 transformations) included in the propensity score
 estimation. It should also include the constant term.}
 
+\item{pscore.model}{in case you you set model="het.probit", pscore.model is the entire hetglm object.
+Default for pscore.model is NULL.}
+
 \item{model}{a description of the functional form (link function) used
 to estimated propensity score. The alternatives are:
-'logit' (default), and 'probit'.}
+'logit' (default), 'probit', and het.probit}
 
 \item{w}{a description of which weight function the projection is based on.
 The alternatives are 'ind' (default), which set \eqn{w(q,u)=1(q<=u)},
@@ -76,7 +79,6 @@ pstest(d = pscore$y, pscore = pscore$fit, xpscore = pscore$x,
 
 }
 \references{
-Sant'Anna, Pedro H. C, and Song, Xiaojun (2016), \emph{Specification Tests for the Propensity Score},
-      available at \url{http://sites.google.com/site/pedrohcsantanna/}.
+Sant'Anna, Pedro H. C, and Song, Xiaojun (2019), \emph{Specification Tests for the Propensity Score},
+      Journal of Econometrics, vol. 210 (2), p. 379-404.
 }
-
