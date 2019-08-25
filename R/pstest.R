@@ -38,7 +38,7 @@
 #'
 #'@references
 #'       Sant'Anna, Pedro H. C, and Song, Xiaojun (2019), \emph{Specification Tests for the Propensity Score},
-#'       Journal of Econometrics.
+#'       Journal of Econometrics, vol. 210 (2), p. 379-404.
 #'
 #'@examples
 #' # Example based on simulation data
