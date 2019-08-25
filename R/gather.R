@@ -1,7 +1,6 @@
 # Functions used to guarantee replicability of the bootstrap
 # These are based on the harvestr package, but since harvestr is not on CRAN anymore, we just use these functions
-
-#' safe version of retrieving the .Random.seed -
+# safe version of retrieving the .Random.seed -
 get.seed.ps <- function(){
   if(exists(".Random.seed", envir=.GlobalEnv, mode="numeric")) {
     seed <- get(".Random.seed", envir=.GlobalEnv, inherits=FALSE)
