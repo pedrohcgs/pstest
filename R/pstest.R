@@ -37,8 +37,8 @@
 #'        returned.
 #'
 #'@references
-#'       Sant'Anna, Pedro H. C, and Song, Xiaojun (2016), \emph{Specification Tests for the Propensity Score},
-#'       available at \url{http://sites.google.com/site/pedrohcsantanna/}.
+#'       Sant'Anna, Pedro H. C, and Song, Xiaojun (2019), \emph{Specification Tests for the Propensity Score},
+#'       Journal of Econometrics.
 #'
 #'@examples
 #' # Example based on simulation data
@@ -63,13 +63,15 @@
 #'@export
 #'
 #'@importFrom stats binomial rbinom runif glm
-#'@importFrom parallel makeCluster parLapply stopCluster
-#'@importFrom harvestr gather glmx hetglm.fit MASS ginv
+#'@importFrom parallel makeCluster parLapply stopCluster nextRNGStream
+#'@importFrom harvestr gather
+#'@importFrom glmx hetglm.fit
+#'@importFrom MASS ginv
 #-------------------------------------------------------------------------------
 pstest = function(d, pscore, xpscore, pscore.model = NULL,
-                  model = c("logit", "probit", "het.probit"),
-                  w = c("ind", "exp", "logistic", "sin", "sincos"),
-                  dist = c("Mammen", "Rademacher"),
+                  model = "logit",
+                  w = "ind",
+                  dist = "Mammen",
                   nboot = 1000, cores = 1, chunk = 1000) {
     #-----------------------------------------------------------------------------
     # Define some underlying variables
@@ -77,6 +79,17 @@ pstest = function(d, pscore, xpscore, pscore.model = NULL,
     xx <- as.matrix(xpscore)
     pscore.fit <- pscore
     uhat <- d - pscore.fit
+    #-----------------------------------------------------------------------------
+    # Run some tests
+    if( !is.element(model,c("logit", "probit", "het.probit"))) {
+      stop("model must be either "logit", "probit" or "het.probit" ")
+    }
+    if( !is.element(dist,c("Mammen", "Rademacher"))) {
+      stop("dist must be either "Mammen", or "Rademacher" ")
+    }
+    if( !is.element(w,c("ind", "exp", "logistic", "sin", "sincos"))) {
+      stop("w must be either "ind", "exp", "logistic", "sin", or "sincos" ")
+    }
     #-----------------------------------------------------------------------------
     # #Define the score variables for the projection
     if (model == "logit") {
