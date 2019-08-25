@@ -58,6 +58,7 @@ is correctly specified. For details of the testing procedure, see
 Sant'Anna and Song (2016),'Specification Tests for the Propensity Score'.
 }
 \examples{
+\dontrun{
 # Example based on simulation data
 # Simulate vector of covariates
 set.seed(1234)
@@ -76,7 +77,7 @@ pstest(d = pscore$y, pscore = pscore$fit, xpscore = pscore$x,
 # Alternatively, one can use the 'sin' weight function
 pstest(d = pscore$y, pscore = pscore$fit, xpscore = pscore$x,
        model = "probit", w = "sin", dist = "Mammen")
-
+}
 }
 \references{
 Sant'Anna, Pedro H. C, and Song, Xiaojun (2019), \emph{Specification Tests for the Propensity Score},
