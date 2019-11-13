@@ -32,7 +32,7 @@ print.pstest <- function(x, ...){
     #Output
     cat(" Call:\n")
     print(x$call)
-    cat("\n Sant'Anna and Song (2016) specification tests for the propensity score:\n")
+    cat("\n Sant'Anna and Song (2019) specification tests for the propensity score:\n")
     print.matrix1(rbind(header, body))
     cat(" -------------------------------------------------------------------------")
     cat("\n Weight function:", "\t \t", ww)
