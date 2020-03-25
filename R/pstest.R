@@ -3,7 +3,7 @@
 #' \emph{pstest} computes Kolmogorov-Smirnov and Cramer-von Mises type tests
 #' for the null hypothesis that a parametric model for the propensity score is
 #' is correctly specified. For details of the testing procedure, see
-#' Sant'Anna and Song (2016),'Specification Tests for the Propensity Score'.
+#' Sant'Anna and Song (2019),'Specification Tests for the Propensity Score'.
 #'
 #'@param d a vector containing the binary treatment indicator.
 #'@param pscore a vector containing the estimated propensity scores.
