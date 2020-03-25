@@ -10,8 +10,9 @@
 #'
 #'@details
 #' This R package implements the class of specification test for the propensity score
-#' proposed in Sant'Anna and Song (2016), `Specification Tests for the Propensity Score',
-#' available at Pedro H.C. Sant'Anna webpage, \url{http://sites.google.com/site/pedrohcsantanna/}.
+#' proposed in Sant'Anna and Song (2019), `Specification Tests for the Propensity Score',
+#' available at \url{https://doi.org/10.1016/j.jeconom.2019.02.002} and 
+#' at Sant'Anna's webpage, \url{http://sites.google.com/site/pedrohcsantanna/}.
 #'
 #' In short, this package implements Kolmogorov-Smirnov and Cramer-von Mises type tests
 #' for parametric propensity score models with either logistic ('logit'), or
@@ -42,8 +43,8 @@
 #'directions.
 #'
 #' @references
-#'       Sant'Anna, Pedro H. C, and Song, Xiaojun (2016), \emph{Specification Tests for the Propensity Score},
-#'       available at \url{http://sites.google.com/site/pedrohcsantanna/}.
+#'       Sant'Anna, Pedro H. C, and Song, Xiaojun (2019), \emph{Specification Tests for the Propensity Score},
+#'       Journal of Econometrics 210 (2), pp. 379-404, \url{https://doi.org/10.1016/j.jeconom.2019.02.002}.
 #'
 #'@docType package
 #'@name pstest-package
