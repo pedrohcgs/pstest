@@ -40,8 +40,8 @@ You can install the package from CRAN with `install.packages("pstest")`.
 
 Alternatively, you can install the most recent version of the `pstest` package from GitHub (this is what we recommend):
 
-        library(devtools)
-        devtools::install_github("pedrohcgs/pstest")
+        #library(remotes)
+        remotes::install_github("pedrohcgs/pstest")
         
 ## Authors 
 
