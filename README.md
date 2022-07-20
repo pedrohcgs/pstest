@@ -19,15 +19,15 @@ As a result, the tests (a) enjoy improved power properties, (b) do not suffer fr
 parametric rate. These appealing features highlight that the tests can be of great use
 in practice.
 
-It is worth stressing that the `pstest` package implements in a unified manner a large class of specification tests, depending on the chosen weight function w(q,u). Current choices are:
+It is worth stressing that the `pstest` package implements in a unified manner a large class of specification tests, depending on the chosen weight function $w(q,u)$. Current choices are:
 
-* `ind` - the indicator weight function w(q,u)=1(q<=u). This is the default.
-* `exp` - the exponential weight function w(q,u)=exp(qu).
-* `logistic` - the logistic weight function w(q,u)=1/[1+exp(1-qu)].
-* `sin` - the sine weight function w(q,u)=sin(qu).
-* `sincos` - the sine and cosine weight function w(q,u)=sin(qu)+cos(qu).
+* `ind` - the indicator weight function $w(q,u) = 1(q \leq u)$. This is the default.
+* `exp` - the exponential weight function $w(q,u) = exp(qu)$.
+* `logistic` - the logistic weight function $w(q,u) = \frac{1}{1+exp(1-qu)}$.
+* `sin` - the sine weight function $w(q,u) = sin(qu)$.
+* `sincos` - the sine and cosine weight function $w(q,u) = sin(qu) + cos(qu)$.
 
-Different weight functions w(q,u) have different power properties. Thus, being able to choose between different w(q,u) gives one the flexibility to direct power in alternative directions.
+Different weight functions $w(q,u)$ have different power properties. Thus, being able to choose between different $w(q,u)$ gives one the flexibility to direct power in alternative directions.
 
 For further details, please see the paper Sant'Anna and Song (2019), [Specification Tests for the Propensity Score](https://www.sciencedirect.com/science/article/pii/S0304407619300272), or the [working paper version](https://papers.ssrn.com/abstract=2872084).
 
@@ -40,9 +40,11 @@ You can install the package from CRAN with `install.packages("pstest")`.
 
 Alternatively, you can install the most recent version of the `pstest` package from GitHub (this is what we recommend):
 
-        #library(remotes)
-        remotes::install_github("pedrohcgs/pstest")
-        
+```r
+#library(remotes)
+remotes::install_github("pedrohcgs/pstest")
+```
+
 ## Authors 
 
 Pedro H. C. Sant'Anna, Vanderbilt University, Nashville, TN. E-mail: pedro.h.santanna [at] vanderbilt [dot] edu.
